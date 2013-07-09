@@ -1,6 +1,5 @@
-AutoSquidCorrect
-================
 <h1>SQUID-Fix</h1>
+================
 SQUID_Fix is a tool designed for chemistry students to save time when analysing SQUID data.
 The program automates the process of subracting the signal caused by the gel cap, leaving the raw sample data.
 <br />
