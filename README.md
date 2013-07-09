@@ -5,5 +5,6 @@ The program automates the process of subracting the signal caused by the gel cap
 <br />
 <h2>Important Files</h2>
 GetData.py - Main script <br />
-JPSW-RM-5_1kGChiT.rso - Overall data (Can be replaced with your own file) <br />
-blank_1kG.csv - Gel cap data (Can be replaced with your own file) <br />
+JPSW-RM-5_1kGChiT.rso - Overall data (Can be replaced with your own file*) <br />
+blank_1kG.csv - Gel cap data (Can be replaced with your own file*) <br />
+*Same name is required for now
