@@ -168,27 +168,22 @@ else:
         dataWrite.write(repr(float(bTemperature[i])) + "," + (bLongMoment[i]))
     dataWrite.close()
 
-#Set data arrays to use matched data
-rTemperature = []
-rLongMoment = []
-bTemperature = []
-bLongMoment = []
-dataFile = open("matchedRecordedData.txt", "r")
-theLine = dataFile.readline()
-while theLine:
-    data = theLine.split(",")
-    rTemperature.append(data[0])
-    rLongMoment.append(data[1])
+def restoreArray(filePath, index):
+    #Set data arrays to use matched data
+    theArray = []
+    dataFile = open(filePath, "r")
     theLine = dataFile.readline()
-dataFile.close()   
-dataFile = open("matchedBlankData.txt", "r")
-theLine = dataFile.readline()
-while theLine:
-    data = theLine.split(",")
-    bTemperature.append(data[0])
-    bLongMoment.append(data[1])
-    theLine = dataFile.readline()
-dataFile.close()
+    while theLine:
+        data = theLine.split(",")
+        theArray.append(data[index])
+        theLine = dataFile.readline()
+    dataFile.close()
+    return theArray
+
+rTemperature = restoreArray("matchedRecordedData.txt", 0)
+rLongMoment = restoreArray("matchedRecordedData.txt", 1)
+bTemperature = restoreArray("matchedBlankData.txt", 0)
+bLongMoment = restoreArray("matchedBlankData.txt", 1)
 
 #Correct data by subtracting blank data from recorded data
 correctedLongMoment = []
@@ -204,3 +199,4 @@ for i in correctedLongMoment:
     dataWrite.write(rTemperature[count] + "," + repr(i) + "\n")
     count = count + 1
 dataWrite.close()
+
