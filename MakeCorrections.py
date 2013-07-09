@@ -1,5 +1,3 @@
-
-
 def getData(filePath, tFileName, lmFileName):
     #Find line containing [Data]
     dataFile = open(filePath, "r")
@@ -70,28 +68,24 @@ rLongMoment = readData("longMoment.txt")
 bTemperature = readData("blankTemperature.txt")
 bLongMoment = readData("blankLongMoment.txt")
 
-#Find nearest +- to data points
-matchedLM = []
-deletions = 0
-startDelete = False
-endDelete = False
-blankLarger = True
-if len(rTemperature) >= len(bTemperature):
-    blankLarger = False
+def matchDataPoints(tempA, lmA, tempB, lmB, filePathA, filePathB):
+    matchedLM = []
+    deletions = 0
+    startDelete = False
     count = 0
-    for i in rTemperature:
+    for i in tempA:
         i = float(i)
         j = 0
-        if i >= float(bTemperature[len(bTemperature)-1]):
-            while i < float(bTemperature[j]):
+        if i >= float(tempB[len(tempB)-1]):
+            while i < float(tempB[j]):
                 j = j + 1      
             #Form straight line between points to calculate
             #long moment value at given temperature
             if j != 0:
-                x1 = float(bTemperature[j])
-                x2 = float(bTemperature[j-1])
-                y1 = float(bLongMoment[j])
-                y2 = float(bLongMoment[j-1])
+                x1 = float(tempB[j])
+                x2 = float(tempB[j-1])
+                y1 = float(lmB[j])
+                y2 = float(lmB[j-1])
                 m = (y2-y1)/(x2-x1)
                 x = i
                 y = (((y2-y1)/(x2-x1))*(x-x1))+y1
@@ -101,72 +95,30 @@ if len(rTemperature) >= len(bTemperature):
                 startDelete = True
         else:
             deletions = deletions + 1
-            endDelete = True
-        count = count + 1    
-
+        count = count + 1
+        
     #Write data to file
-    dataWrite = open("matchedBlankData.txt", "w")
+    dataWrite = open(filePathA, "w")
     lmCount = 0
     startIndex = 0
     if startDelete == True:
         startIndex = 1
-    for i in range(startIndex, len(rTemperature) - deletions + 1):
-        dataWrite.write(repr(float(bTemperature[i])) + "," + repr(matchedLM[lmCount]) + "\n")
-        lmCount = lmCount + 1
-    dataWrite.close()
-    dataWrite = open("matchedRecordedData.txt", "w")
-    lmCount = 0
-    startIndex = 0
-    if startDelete == True:
-        startIndex = 1
-    for i in range(startIndex, len(rTemperature) - deletions + 1):
-        dataWrite.write(repr(float(rTemperature[i])) + "," + repr(rLongMoment[i]) + "\n")
-        lmCount = lmCount + 1
-    dataWrite.close()
-else:
-    count = 0
-    for i in bTemperature:
-        i = float(i)
-        j = 0
-        if i >= float(rTemperature[len(rTemperature)-1]):
-            while i < float(rTemperature[j]):
-                j = j + 1      
-            #Form straight line between points to calculate
-            #long moment value at given temperature
-            if j != 0:
-                x1 = float(rTemperature[j])
-                x2 = float(rTemperature[j-1])
-                y1 = float(rLongMoment[j])
-                y2 = float(rLongMoment[j-1])
-                m = (y2-y1)/(x2-x1)
-                x = i
-                y = (((y2-y1)/(x2-x1))*(x-x1))+y1
-                matchedLM.append(y)
-            else:
-                deletions = deletions + 1
-                startDelete = True
-        else:
-            deletions = deletions + 1
-            endDelete = True
-        count = count + 1    
-
-    #Write data to file
-    dataWrite = open("matchedRecordedData.txt", "w")
-    lmCount = 0
-    startIndex = 0
-    if startDelete == True:
-        startIndex = 1
-    for i in range(startIndex, len(bTemperature) - deletions + 1):
-        dataWrite.write(repr(float(bTemperature[i])) + "," + repr(matchedLM[lmCount]) + "\n")
+    for i in range(startIndex, len(tempA) - deletions + 1):
+        dataWrite.write(repr(float(tempA[i])) + "," + repr(matchedLM[lmCount]) + "\n")
         lmCount = lmCount + 1
     dataWrite.close()   
-    dataWrite = open("matchedBlankData.txt", "w")
+    dataWrite = open(filePathB, "w")
     startIndex = 0
     if startDelete == True:
         startIndex = 1
-    for i in range(startIndex, len(bTemperature) - deletions + 1):
-        dataWrite.write(repr(float(bTemperature[i])) + "," + (bLongMoment[i]))
+    for i in range(startIndex, len(tempA) - deletions + 1):
+        dataWrite.write(repr(float(tempA[i])) + "," + (lmA[i]))
     dataWrite.close()
+
+if len(rTemperature) >= len(bTemperature):
+    matchDataPoints(rTemperature, rLongMoment, bTemperature, bLongMoment, "matchedBlankData.txt", "matchedRecordedData.txt")
+else:
+    matchDataPoints(bTemperature, bLongMoment, rTemperature, rLongMoment, "matchedRecordedData.txt", "matchedBlankData.txt") 
 
 def restoreArray(filePath, index):
     #Set data arrays to use matched data
@@ -199,4 +151,3 @@ for i in correctedLongMoment:
     dataWrite.write(rTemperature[count] + "," + repr(i) + "\n")
     count = count + 1
 dataWrite.close()
-
