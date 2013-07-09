@@ -174,7 +174,7 @@ else:
     for i in range(startIndex, len(bTemperature) - deletions + 1):
         dataWrite.write(repr(float(bTemperature[i])) + "," + repr(matchedLM[lmCount]) + "\n")
         lmCount = lmCount + 1
-    dataWrite.close()
+    dataWrite.close()   
     dataWrite = open("matchedBlankData.txt", "w")
     startIndex = 0
     if startDelete == True:
@@ -183,4 +183,39 @@ else:
         dataWrite.write(repr(float(bTemperature[i])) + "," + (bLongMoment[i]))
     dataWrite.close()
 
+#Set data arrays to use matched data
+rTemperature = []
+rLongMoment = []
+bTemperature = []
+bLongMoment = []
+dataFile = open("matchedRecordedData.txt", "r")
+theLine = dataFile.readline()
+while theLine:
+    data = theLine.split(",")
+    rTemperature.append(data[0])
+    rLongMoment.append(data[1])
+    theLine = dataFile.readline()
+dataFile.close()   
+dataFile = open("matchedBlankData.txt", "r")
+theLine = dataFile.readline()
+while theLine:
+    data = theLine.split(",")
+    bTemperature.append(data[0])
+    bLongMoment.append(data[1])
+    theLine = dataFile.readline()
+dataFile.close()
 
+#Correct data by subtracting blank data from recorded data
+correctedLongMoment = []
+count = 0
+for i in rLongMoment:
+    correctedLongMoment.append(float(i) - float(bLongMoment[count]))
+    count = count + 1
+
+#Write corrected data to file
+dataWrite = open("correctedData.txt", "w")
+count = 0
+for i in correctedLongMoment:
+    dataWrite.write(rTemperature[count] + "," + repr(i) + "\n")
+    count = count + 1
+dataWrite.close()
