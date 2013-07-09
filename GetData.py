@@ -1,9 +1,6 @@
-filePath = "JPSW-RM-5_1kGChiT.rso"
-blankPath = "blank_1kG.csv"
-tFileName = "temperature.txt"
-lmFileName = "longMoment.txt"
 
-for i in range(2):
+
+def getData(filePath, tFileName, lmFileName):
     #Find line containing [Data]
     dataFile = open(filePath, "r")
     theLine = dataFile.readline()
@@ -48,42 +45,30 @@ for i in range(2):
     dataWrite.close()
     dataWrite = open(lmFileName, "w")
     for i in longMomentData:
-        if filePath != blankPath:
+        if tFileName != "blankTemperature.txt":
             dataWrite.write(i + "\n")
         else:
             dataWrite.write(i)
     dataWrite.close()
-    filePath = blankPath
-    tFileName = "blankTemperature.txt"
-    lmFileName = "blankLongMoment.txt"
 
+getData("JPSW-RM-5_1kGChiT.rso", "temperature.txt", "longMoment.txt")
+getData("blank_1kG.csv","blankTemperature.txt", "blankLongMoment.txt")
 
-#Read data back into arrays
-rTemperature = []
-rLongMoment = []
-bTemperature = []
-bLongMoment = []
-dataFile = open("temperature.txt", "r")
-theLine = dataFile.readline()
-while theLine:
-    rTemperature.append(theLine)
+def readData(filePath):
+    #Read data back into arrays
+    theArray = []
+    dataFile = open(filePath, "r")
     theLine = dataFile.readline()
-dataFile = open("longMoment.txt", "r")
-theLine = dataFile.readline()
-while theLine:
-    rLongMoment.append(theLine)
-    theLine = dataFile.readline()
-dataFile = open("blankTemperature.txt", "r")
-theLine = dataFile.readline()
-while theLine:
-    bTemperature.append(theLine)
-    theLine = dataFile.readline()
-dataFile = open("blankLongMoment.txt", "r")
-theLine = dataFile.readline()
-while theLine:
-    bLongMoment.append(theLine)
-    theLine = dataFile.readline()
-dataFile.close()    
+    while theLine:
+        theArray.append(theLine)
+        theLine = dataFile.readline()
+    dataFile.close()
+    return theArray
+
+rTemperature = readData("temperature.txt")
+rLongMoment = readData("longMoment.txt")
+bTemperature = readData("blankTemperature.txt")
+bLongMoment = readData("blankLongMoment.txt")
 
 #Find nearest +- to data points
 matchedLM = []
