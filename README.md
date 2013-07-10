@@ -9,4 +9,4 @@ leaving the raw sample data.
 SQUID-Fix.py - Main script <br />
 DataHandling.py - Contains functions related to handling data <br />
 Matching.py - Contains matching algorithm <br />
-config.txt - Parameters set within file used when program is run
+config.txt - Parameters set within file used when program is run <br />
