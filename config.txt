@@ -1,0 +1,9 @@
+Raw Data Filename: JPSW-RM-5_1kGChiT.rso
+Gel Cap Data Filename: blank_1kG.csv
+Eicosane Data Filename: EicosaineBlank_21.18_RSO_1000G
+Mass of Eicosane Used In Sample (mg): 14
+Mass of Eicosane Used In Blank (mg): 21.18
+Molecular Weight of Sample: 
+Mass of Sample (mg): 
+Data Set X: temperature
+Data Set Y: long moment
