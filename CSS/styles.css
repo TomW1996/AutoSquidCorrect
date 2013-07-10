@@ -7,6 +7,52 @@ body{
 	color: #555555;
 }
 
+*{
+	margin: 0;
+	padding: 0;
+}
+
+/** defaults **/
+
+table{
+	text-align: left;
+}
+
+th, td{
+	padding: 0px 0px;
+}
+
+th{
+	color: #fff;
+	background-color: #999;
+}
+
+td{
+	background: #fff;
+}
+
+p{
+	line-height: 1.9em;
+	margin-bottom: 20px;
+}
+
+a{
+	color: #0066FF;
+}
+
+a:hover{
+	color: #333333;
+}
+
+a:focus{
+	outline: none;
+}
+
+h1{
+	color: #999;
+	font-size: 35px;
+}
+
 #container{
 	width: 979px;
 	margin: 0px auto;
