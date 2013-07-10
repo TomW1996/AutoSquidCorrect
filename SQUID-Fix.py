@@ -2,11 +2,13 @@ from DataHandling import *
 from Matching import *
 
 #Get settings from config file
-rFilePath = getInformation(0).lower()
-bFilePath = getInformation(1).lower()
-eFilePath = getInformation(2).lower()
+rFilePath = getInformation(0)
+bFilePath = getInformation(1)
+eFilePath = getInformation(2)
 compoundEico = float(getInformation(3))
 testEico = float(getInformation(4))
+molecularWeight = float(getInformation(5))
+compoundWeight = float(getInformation(6))
 dataX = getInformation(7).lower()
 dataY = getInformation(8).lower()
 
@@ -44,16 +46,22 @@ eLongMoment = restoreArray("matchedEicoData.txt", 1)
 
 #Correct data by subtracting blank data from recorded data
 correctedLongMoment = []
+chiData = []
+chiTData = []
 count = 0
 for i in rLongMoment:
     correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
+    chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
+    chiTData.append(float(chiData[count]) * float(rTemperature[count]))
     count = count + 1
 
 #Write corrected data to file
-dataWrite = open("correctedData.txt", "w")
+outputFile = rFilePath + "_Corrected.txt"
+dataWrite = open(outputFile, "w")
 count = 0
+dataWrite.write("Temperature (K),Uncorrected Long Moment (emu),Corrected Long Moment (emu),Chi,ChiT" + "\n")
 for i in correctedLongMoment:
-    dataWrite.write(rTemperature[count] + "," + repr(i) + "\n")
+    dataWrite.write(rTemperature[count] + "," + repr(float(rLongMoment[count])) + "," + repr(i) + "," + repr(chiData[count]) + "," + repr(chiTData[count]) + "\n")
     count = count + 1
 dataWrite.close()
 
