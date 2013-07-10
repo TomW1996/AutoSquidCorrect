@@ -1,0 +1,26 @@
+body{
+	background: #CCCCCC;
+	margin: 10px;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #555555;
+}
+
+#container{
+	width: 979px;
+	margin: 0px auto;
+	padding: 0;
+}
+#body{
+	padding: 20px 20px;
+	border: 1px solid #999;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 40px #999;
+	-webkit-box-shadow: 0 0 40px #999;
+	box-shadow: 0 0 40px #999;
+}
+#content{
+	float: left;
+	width: 650px;
+}
