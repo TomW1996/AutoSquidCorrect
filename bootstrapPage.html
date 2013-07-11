@@ -1,0 +1,128 @@
+<!DOCTYPE html>  
+<html>  
+  <head>  
+    <title>SQUID-Fix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <!-- Bootstrap -->  
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">  
+  </head>  
+  <body>  
+
+    
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+		<div class="hero-unit">
+			<h1>SQUID-Fix</h1>
+			<p>Information goes here.</p>
+		</div>
+
+		<div class="row">
+			<div class="span3">
+				<h2>Data Files:</h2>
+				<div class = "dropBoxContainer">
+					<div class = "dropBoxBody">
+						<form action = "upload_file.php" method = "post" enctype= "multipart/form-data">
+							<label for = "file">Raw Data:</label>
+							<input type = "file" name = "file" id = "file"><br>
+							<input type = "submit" name = "submit" value = "Submit">
+						</form>
+					</div>
+					<div class = "dropBoxBody">
+						<form action = "upload_file.php" method = "post" enctype= "multipart/form-data">
+							<label for = "file">Gel Cap:</label>
+							<input type = "file" name = "file" id = "file"><br>
+							<input type = "submit" name = "submit" value = "Submit">
+						</form>
+					</div>
+					<div class = "dropBoxBody">
+						<form action = "upload_file.php" method = "post" enctype= "multipart/form-data">
+							<label for = "file">Eicosane:</label>
+							<input type = "file" name = "file" id = "file"><br>
+							<input type = "submit" name = "submit" value = "Submit">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<h2>Settings:</h2>
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
+						<div class="controls">
+							<div class="input-append">
+								<input class="span1" id="appendedInput" type="text">
+								<span class="add-on">mg</span>
+							</div>
+						</div>
+				    </div>
+				</form>
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
+						<div class="controls">
+							<div class="input-append">
+								<input class="span1" id="appendedInput" type="text">
+								<span class="add-on">mg</span>
+							</div>
+						</div>
+				    </div>
+				</form>	
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="molWeight">Molecular Weight:</label>
+						<div class="controls">
+							<div class="input-append">
+								<input class="span1" id="appendedInput" type="text">
+								<span class="add-on">mg</span>
+							</div>
+						</div>
+				    </div>
+				</form>	
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="compWeight">Compound Weight:</label>
+						<div class="controls">
+							<div class="input-append">
+								<input class="span1" id="appendedInput" type="text">
+								<span class="add-on">mg</span>
+							</div>
+						</div>
+				    </div>
+				</form>
+			</div>	
+			<div class="span3">
+				<p><a class = "btn btn-large btn-primary" type = "button" href="#">Correct Data</a></p>
+			</div>
+		</div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+<!--
+	
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+	
+	-->
+
+    <script src="http://code.jquery.com/jquery.js"></script>  
+    <script src="bootstrap/js/bootstrap.min.js"></script>  
+  </body>  
+</html>

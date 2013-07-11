@@ -1,4 +1,4 @@
-Raw Data Filename: JPSW-RM-5_1kGChiT.rso
+Raw Data Filename: JPSW-RM-5_1kGChiT.rso.dat
 Gel Cap Data Filename: blank_1kG.csv
 Eicosane Data Filename: EicosaineBlank_21.18_RSO_1000G
 Mass of Eicosane Used In Sample (mg): 14
