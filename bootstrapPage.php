@@ -13,7 +13,7 @@
 			<div class = "row">
 				<div class = "span7">
 					<h1>SQUID-Fix</h1>
-					<p>SQUID-Fix is a powerful tool designed for chemistry students. Using SQUID data for Eicosane and the gel cap, it will correct the raw data 
+					<p>SQUID-Fix is a powerful tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
 					and produce graphs as well as a downloadable file with all the calculated results.</p>
 				</div>
 					<img src = "images/squidpic.jpg" align = "right" width = 240>
@@ -132,10 +132,7 @@
 		</div>
 		<div class = "row">
 			<form action = "runPythonCorrection.php" method = "post">
-				<p><center><a class = "btn btn-large btn-primary" type = "button">Correct Data</a></center></p>
-			</form>
-			<form action = "runPythonCorrection.php">
-				<input type = "submit" name = "correctData" value = "Correct Data"/>
+				<p><center><input type = "submit" class = "btn btn-large btn-primary" value = "Correct Data"/></center></p>
 			</form>
 		</div>
 		<div class = "row">
@@ -160,8 +157,7 @@
 		</style>
 			
 			<script>
-			var holder = document.getElementById('holder1'),
-			document.write("Hello A"),
+			var holder1 = document.getElementById('holder1'),
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
 				  dnd: 'draggable' in document.createElement('span'),
@@ -257,7 +253,6 @@
 			
 			<script>
 			var holder2 = document.getElementById('holder2'),
-			document.write("Hello B"),
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
 				  dnd: 'draggable' in document.createElement('span'),
@@ -355,7 +350,6 @@
 			
 			<script>
 			var holder3 = document.getElementById('holder3'),
-			document.write("Hello C"),
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
 				  dnd: 'draggable' in document.createElement('span'),
