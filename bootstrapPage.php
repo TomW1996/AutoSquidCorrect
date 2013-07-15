@@ -189,7 +189,8 @@
 			  }
 			});
 
-			function previewfile(file) {
+			function previewfile1(file) {
+				console.log("holder1");
 			  if (tests.filereader === true && acceptedTypes[file.type] === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
@@ -202,20 +203,21 @@
 				reader.readAsDataURL(file);
 			  }  else {
 				holder1.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
+				file.name = file.name.replace(/(.*)\/.*(\.png$)/i, '$1/RAWDATA$2');
 				console.log(file);
 			  }
 			}
 
-			function readfiles(files) {
+			function readfiles1(files) {
 				debugger;
 				var formData = tests.formdata ? new FormData() : null;
 				for (var i = 0; i < files.length; i++) {
 				  if (tests.formdata) formData.append('file', files[i]);
-				  previewfile(files[i]);
+				  previewfile1(files[i]);
 				}
 
 				// now post a new XHR request
-				if (tests.formdata) {
+	/*			if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
 				  xhr.open('POST', '/devnull.php');
 				  xhr.onload = function() {
@@ -229,10 +231,10 @@
 						progress.value = progress.innerHTML = complete;
 					  }
 					}
-				  }
+				  } 
 
-				  xhr.send(formData);
-				}
+				  xhr.send(formData); 
+				}*/
 			}
 
 			if (tests.dnd) { 
@@ -241,12 +243,12 @@
 			  holder1.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				readfiles(e.dataTransfer.files);
+				readfiles1(e.dataTransfer.files);
 			  }
 			} else {
 			  fileupload.className = 'hidden';
 			  fileupload.querySelector('input').onchange = function () {
-				readfiles(this.files);
+				readfiles1(this.files);
 			  };
 			}
 			</script>
@@ -284,7 +286,8 @@
 			  }
 			});
 
-			function previewfile(file) {
+			function previewfile2(file) {
+				console.log("holder2");
 			  if (tests.filereader === true && acceptedTypes[file.type] === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
@@ -301,12 +304,12 @@
 			  }
 			}
 
-			function readfiles(files) {
+			function readfiles2(files) {
 				debugger;
 				var formData = tests.formdata ? new FormData() : null;
 				for (var i = 0; i < files.length; i++) {
 				  if (tests.formdata) formData.append('file', files[i]);
-				  previewfile(files[i]);
+				  previewfile2(files[i]);
 				}
 
 				// now post a new XHR request
@@ -314,20 +317,20 @@
 				  var xhr = new XMLHttpRequest();
 				  xhr.open('POST', '/devnull.php');
 				  xhr.onload = function() {
-					progress.value = progress.innerHTML = 100;
+	//				progress.value = progress.innerHTML = 100;
 				  };
 
-				  if (tests.progress) {
+	/*			  if (tests.progress) {
 					xhr.upload.onprogress = function (event) {
 					  if (event.lengthComputable) {
 						var complete = (event.loaded / event.total * 100 | 0);
 						progress.value = progress.innerHTML = complete;
 					  }
 					}
-				  }
+				  } */
 
 				  xhr.send(formData);
-				}
+				} 
 			}
 
 			if (tests.dnd) { 
@@ -336,12 +339,12 @@
 			  holder2.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				readfiles(e.dataTransfer.files);
+				readfiles2(e.dataTransfer.files);
 			  }
 			} else {
 			  fileupload.className = 'hidden';
 			  fileupload.querySelector('input').onchange = function () {
-				readfiles(this.files);
+				readfiles2(this.files);
 			  };
 			}
 			
@@ -381,7 +384,8 @@
 			  }
 			});
 
-			function previewfile(file) {
+			function previewfile3(file) {
+				console.log("holder3");
 			  if (tests.filereader === true && acceptedTypes[file.type] === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
@@ -398,12 +402,12 @@
 			  }
 			}
 
-			function readfiles(files) {
+			function readfiles3(files) {
 				debugger;
 				var formData = tests.formdata ? new FormData() : null;
 				for (var i = 0; i < files.length; i++) {
 				  if (tests.formdata) formData.append('file', files[i]);
-				  previewfile(files[i]);
+				  previewfile3(files[i]);
 				}
 
 				// now post a new XHR request
@@ -411,20 +415,20 @@
 				  var xhr = new XMLHttpRequest();
 				  xhr.open('POST', '/devnull.php');
 				  xhr.onload = function() {
-					progress.value = progress.innerHTML = 100;
+	//				progress.value = progress.innerHTML = 100;
 				  };
 
-				  if (tests.progress) {
+	/*			 if (tests.progress) {
 					xhr.upload.onprogress = function (event) {
 					  if (event.lengthComputable) {
 						var complete = (event.loaded / event.total * 100 | 0);
 						progress.value = progress.innerHTML = complete;
 					  }
 					}
-				  }
+				  }*/
 
 				  xhr.send(formData);
-				}
+				} 
 			}
 
 			if (tests.dnd) { 
@@ -433,12 +437,12 @@
 			  holder3.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				readfiles(e.dataTransfer.files);
+				readfiles3(e.dataTransfer.files);
 			  }
 			} else {
 			  fileupload.className = 'hidden';
 			  fileupload.querySelector('input').onchange = function () {
-				readfiles(this.files);
+				readfiles3(this.files);
 			  };
 			}
 			
