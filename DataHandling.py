@@ -2,7 +2,7 @@ import os
 
 def getInformation(index):
     theData = []
-    dataFile = open("config.txt", "r")
+    dataFile = open("upload/config.txt", "r")
     for i in range(9):
         theLine = dataFile.readline()
         theData.append(theLine.split(":")[1].strip())

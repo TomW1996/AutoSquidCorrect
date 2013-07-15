@@ -55,6 +55,7 @@ for i in rLongMoment:
     chiTData.append(float(chiData[count]) * float(rTemperature[count]))
     count = count + 1
 
+
 #Write corrected data to file
 outputFile = rFilePath + "_Corrected.txt"
 dataWrite = open(outputFile, "w")
@@ -62,7 +63,7 @@ count = 0
 dataWrite.write("Temperature (K),Uncorrected Long Moment (emu),Corrected Long Moment (emu),Chi,ChiT" + "\n")
 for i in correctedLongMoment:
     dataWrite.write(rTemperature[count] + "," + repr(float(rLongMoment[count])) + "," + repr(i) + "," + repr(chiData[count]) + "," + repr(chiTData[count]) + "\n")
-    count = count + 1
+    count = count + 1 
 dataWrite.close()
 
 deleteFiles()

@@ -1,0 +1,9 @@
+Raw Data Filename: upload/rawData.txt
+Gel Cap Data Filename: upload/gelcapData.txt
+Eicosane Data Filename: upload/eicoData.txt
+Mass of Eicosane Used In Sample (mg): 14
+Mass of Eicosane Used In Blank (mg): 21.18
+Molecular Weight of Sample (gmol^-1): 4512.77
+Compound Weight of Sample (mg): 0.01829
+Data Set X: temperature
+Data Set Y: long moment
