@@ -61,7 +61,7 @@
 							<option>Apply</option>
 							<option>Don't Apply</option>							
 						</select>
-						<input id = "pascalField" placeholder="Constant Value">
+						<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value">
 					</div>
 				</div>	
 			</form>
@@ -212,7 +212,7 @@
 
 				reader.readAsDataURL(file);
 			  }  else {
-				holder1.innerHTML += '<p>Uploaded ' + 'rawData_' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
+				holder1.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
 			  }
 			}
@@ -304,7 +304,7 @@
 
 				reader.readAsDataURL(file);
 			  }  else {
-				holder2.innerHTML += '<p>Uploaded ' + 'blankData_' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
+				holder2.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
 			  }
 			}
@@ -402,7 +402,7 @@
 
 				reader.readAsDataURL(file);
 			  }  else {
-				holder3.innerHTML += '<p>Uploaded ' + 'eicoData_' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
+				holder3.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
 			  }
 			}
