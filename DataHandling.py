@@ -8,6 +8,18 @@ def getInformation(index):
         theData.append(theLine.split(":")[1].strip())
     return theData[index]
 
+def getSampleMass(filePath):
+    dataFile = open(filePath, "r")
+    theLine = dataFile.readline()
+    foundData = False
+    while foundData == False:
+        if "WEIGHT" in theLine:
+            foundData = True
+        else:
+            theLine = dataFile.readline()
+    sampleMass = theLine.split(",")[2]
+    return sampleMass
+
 def getData(filePath, tFileName, lmFileName, dataX, dataY):
     #Find line containing [Data]
     dataFile = open(filePath, "r")

@@ -49,15 +49,14 @@
 					<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
 					<div class = "controls">
 						<select onchange =
-								'var selected = options[selectedIndex].index;
-								console.log(selected);
-								if(selected == 1){
-									document.getElementById("pascalField").style.visibility = "hidden";
-								}
-								else{
-									document.getElementById("pascalField").style.visibility = "visible";
-								}
-							'>
+							'var selected = options[selectedIndex].index;
+							console.log(selected);
+							if(selected == 1){
+								document.getElementById("pascalField").style.visibility = "hidden";
+							}
+							else{
+								document.getElementById("pascalField").style.visibility = "visible";
+							}'>
 							<option>Apply</option>
 							<option>Don't Apply</option>							
 						</select>
@@ -144,9 +143,6 @@
 			<form action = "runPythonCorrection.php" method = "post">
 				<p><center><input type = "submit" class = "btn btn-large btn-primary" value = "Correct Data"/></center></p>
 			</form>
-		</div>
-		<div class = "row">
-			<center>Draw a graph<center>
 		</div>
 
 		<style>
