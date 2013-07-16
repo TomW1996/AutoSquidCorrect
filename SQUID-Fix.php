@@ -24,7 +24,7 @@
 			<div class="span4">
 				<h4>Raw Data:</h4>
 				<form action = "cancelRaw.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-danger" value = "X"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
 				</form>
 				<article>
 					<div id="holder1">
@@ -38,7 +38,7 @@
 			<div class="span4">
 				<h4>Gel Cap:</h4>
 				<form action = "cancelCap.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-danger" value = "X"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
 				</form>
 				<article>
 					<div id="holder2">
@@ -49,7 +49,7 @@
 			<div class="span4">
 				<h4>Eicosane:</h4>
 				<form action = "cancelEico.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-danger" value = "X"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
 				</form>
 				<article>
 					<div id="holder3">
