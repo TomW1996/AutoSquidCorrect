@@ -19,56 +19,13 @@
 					<img src = "images/squidpic.jpg" align = "right" width = 240>
 			</div>	
 		</div>		
-		<div class = "row">
-			<h2>Preferences:</h2>	
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="gelcapPref">Gel Cap Data:</label>
-					<div class = "controls">
-						<select>
-							<option>Use own</option>
-							<option>Use ours</option>
-						</select>
-					</div>
-				</div>	
-			</form>
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="eicoPref">Eicosane Data:</label>
-					<div class = "controls">
-						<select>
-							<option>Use own</option>
-							<option>None used</option>
-							<option>Use ours</option>
-						</select>
-					</div>
-				</div>	
-			</form>
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
-					<div class = "controls">
-						<select onchange =
-							'var selected = options[selectedIndex].index;
-							console.log(selected);
-							if(selected == 1){
-								document.getElementById("pascalField").style.visibility = "hidden";
-							}
-							else{
-								document.getElementById("pascalField").style.visibility = "visible";
-							}'>
-							<option>Apply</option>
-							<option>Don't Apply</option>							
-						</select>
-						<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value">
-					</div>
-				</div>	
-			</form>
-		</div>
 		<div class="row">
 			<h2>Data Files:</h2>
 			<div class="span4">
 				<h4>Raw Data:</h4>
+				<form action = "cancelRaw.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-danger" value = "X"/></p>
+				</form>
 				<article>
 					<div id="holder1">
 					</div>
@@ -76,21 +33,62 @@
 					<p id="filereader">File API & FileReader API not supported</p>
 					<p id="formdata">XHR2's FormData is not supported</p>
 					<p id="progress">XHR2's upload progress isn't supported</p>
-				</article>	
+				</article>
 			</div>
 			<div class="span4">
 				<h4>Gel Cap:</h4>
+				<form action = "cancelCap.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-danger" value = "X"/></p>
+				</form>
 				<article>
 					<div id="holder2">
 					</div>
 					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
 				</article>
+			</div>
+			<div class="span4">
+				<h4>Eicosane:</h4>
+				<form action = "cancelEico.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-danger" value = "X"/></p>
+				</form>
+				<article>
+					<div id="holder3">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>				
+			</div>
+		</div>
+		<div class  = "row">
+			<h2>Experimental Data:</h2>
+			<div class="span4">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
+						<div class = "controls">
+							<select class = "span2" onchange =
+								'var selected = options[selectedIndex].index;
+								console.log(selected);
+								if(selected == 1){
+									document.getElementById("pascalField").style.visibility = "hidden";
+								}
+								else{
+									document.getElementById("pascalField").style.visibility = "visible";
+								}'>
+								<option>Apply</option>
+								<option>Don't Apply</option>							
+							</select>
+							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value">
+						</div>
+					</div>	
+				</form>
+			</div>
+			<div class="span4">
 				<form class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="molWeight">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="appendedInput" type="text">
+								<input class="span1" id="appendedInput" type="text" value = "<?php system('C:\Python33\python.exe SampleMass.py', $sampleMass); ?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -109,12 +107,6 @@
 				</form>	
 			</div>
 			<div class="span4">
-				<h4>Eicosane:</h4>
-				<article>
-					<div id="holder3">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>
 				<form class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
@@ -230,6 +222,9 @@
 					xhr.upload.onprogress = function (event) {
 					  if (event.lengthComputable) {
 						var complete = (event.loaded / event.total * 100 | 0);
+						if(complete === 100){
+							location.reload();
+						}
 					  }
 					}
 				  } 
