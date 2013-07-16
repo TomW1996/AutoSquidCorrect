@@ -93,8 +93,6 @@
 							</div>
 						</div>
 				    </div>
-				</form>
-				<form class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
@@ -117,8 +115,6 @@
 							</div>
 						</div>
 				    </div>
-				</form>
-				<form class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
