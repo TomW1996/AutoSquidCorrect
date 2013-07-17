@@ -3,12 +3,11 @@
   <head>  
     <title>SQUID-Fix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <!-- Bootstrap -->  
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">  
   </head>  
   <body>  
     <div class="container">
-		<!-- Main hero unit for a primary marketing message or call to action -->
+		<!--Header-->
 		<div class="hero-unit">
 			<div class = "row">
 				<div class = "span7">
@@ -19,10 +18,13 @@
 					<img src = "images/squidpic.jpg" align = "right" width = 240>
 			</div>	
 		</div>
-		<div class  = "row">
+		<!--Header-->
+		<!--Experimental Data Section-->
+		<div class  = "row">	
 			<h2>Experimental Data:</h2>
 			<div class="span4">
 				<form class="form-horizontal">
+					<!--Pascal Correction-->
 					<div class="control-group">
 						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
 						<div class = "controls">
@@ -40,10 +42,12 @@
 							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "">
 						</div>
 					</div>	
+					<!--Pascal Correction-->
 				</form>
 			</div>
 			<div class="span4">
 				<form class="form-horizontal" method = "post">
+					<!--Sample Mass-->
 					<div class="control-group">
 						<label class="control-label" for="molWeight">Sample Mass:</label>
 						<div class="controls">
@@ -53,6 +57,8 @@
 							</div>
 						</div>
 				    </div>
+					<!--Sample Mass-->
+					<!--Molecular Weight-->
 					<div class="control-group">
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
@@ -62,10 +68,12 @@
 							</div>
 						</div>
 				    </div>
+					<!--Molecular Weight-->
 				</form>	
 			</div>
 			<div class="span4">
 				<form class="form-horizontal">
+					<!--Sample Eicosane-->
 					<div class="control-group">
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
 						<div class="controls">
@@ -75,6 +83,8 @@
 							</div>
 						</div>
 				    </div>
+					<!--Sample Eicosane-->
+					<!--Blank Eicosane-->
 					<div class="control-group">
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
@@ -84,11 +94,15 @@
 							</div>
 						</div>
 				    </div>
+					<!--Blank Eicosane-->
 				</form>					
 			</div>
 		</div>
+		<!--Experimental Data Section-->
+		<!--Data Files Section-->
 		<div class="row">
 			<h2>Data Files:</h2>
+			<!--Raw Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Raw Data:</h4>
 				<form action = "cancelRaw.php" method = "post">
@@ -103,6 +117,8 @@
 					<p id="progress">XHR2's upload progress isn't supported</p>
 				</article>
 			</div>
+			<!--Raw Data Drop Upload Box-->
+			<!--Gel Cap Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Gel Cap:</h4>
 				<form action = "cancelCap.php" method = "post">
@@ -114,6 +130,8 @@
 					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
 				</article>
 			</div>
+			<!--Gel Cap Data Drop Upload Box-->
+			<!--Eicosane Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Eicosane:</h4>
 				<form action = "cancelEico.php" method = "post">
@@ -125,10 +143,14 @@
 					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
 				</article>				
 			</div>
+			<!--Eicosane Data Drop Upload Box-->
 		</div>
+		<!--Data Files Section-->
+		<!--Correct Button-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
 		</div>
+		<!--Correct Button-->
 
 		<style>
 			#holder1 { border: 10px dashed #ccc; width: 250px; min-height: 250px; margin: 20px auto;}
