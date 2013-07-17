@@ -127,9 +127,7 @@
 			</div>
 		</div>
 		<div class = "row">
-			<form action = "run.php" method = "post">
-				<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
-			</form>
+			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
 		</div>
 
 		<style>

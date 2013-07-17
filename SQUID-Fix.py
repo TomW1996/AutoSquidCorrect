@@ -11,6 +11,7 @@ molecularWeight = float(getInformation(5))
 compoundWeight = float(getInformation(6))
 dataX = getInformation(7).lower()
 dataY = getInformation(8).lower()
+pascalValue = getInformation(9)
 
 #Get data from data files
 getData(rFilePath, "temperature.txt", "longMoment.txt", dataX, dataY)
