@@ -127,9 +127,7 @@
 			</div>
 		</div>
 		<div class = "row">
-<!--			<form action = "runPythonCorrection.php" method = "post">-->
-				<p><center><input type = "submit" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();"></center></p>
-	<!--		</form>-->
+			<p><center><input type = "submit" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();"></center></p>
 		</div>
 
 		<style>
@@ -156,26 +154,16 @@
 				var sampleEico = document.getElementById('sampleEico').value;
 				var blankEico = document.getElementById('blankEico').value;
 				var applyCorrection = document.getElementById('pascalSelect').value;
-				var pascalValue = document.getElementById('pascalField').value;
-				<?php
-					$sampleMass = $_GET['sampleMass'];
-					shell_exec('C:\Python33\python.exe test.py'.$sampleMass);
-				?>		
+				var pascalValue = document.getElementById('pascalField').value;		
 				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || (applyCorrection === "Apply" && pascalValue === "")){
 						alert("Please fill all fields");
 				}
-				else{
-					
-					//	shell_exec('C:\Python33\python.exe SQUID-Fix.py');							
-					
-					console.log(sampleMass);
-					console.log(molWeight);
-					console.log(sampleEico);
-					console.log(blankEico);
-					console.log(applyCorrection);
-					if(applyCorrection === "Apply"){
-						console.log(pascalValue);
-					}
+				else{						
+					$.post('SendData.php', {varSampleMass: sampleMass});
+					$.post('SendData.php', {varMolWeight: molWeight});
+					$.post('SendData.php', {varSampleEico: sampleEico});
+					$.post('SendData.php', {varBlankEico: blankEico});		
+					$.post('SendData.php', {varPascalValue: pascalValue});
 				}
 			}
 		</script>
