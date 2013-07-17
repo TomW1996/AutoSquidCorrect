@@ -1,9 +1,9 @@
-upload/rawData
-upload/gelcapData
-upload/eicoData
-2
-3
-1
+upload/rawData.txt
+upload/gelcapData.txt
+upload/eicoData.txt
+28
+7.25
+14
 9.850
 temperature
 long moment

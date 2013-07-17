@@ -18,45 +18,6 @@
 				</div>
 					<img src = "images/squidpic.jpg" align = "right" width = 240>
 			</div>	
-		</div>		
-		<div class="row">
-			<h2>Data Files:</h2>
-			<div class="span4">
-				<h4>Raw Data:</h4>
-				<form action = "cancelRaw.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
-				</form>
-				<article>
-					<div id="holder1">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-					<p id="filereader">File API & FileReader API not supported</p>
-					<p id="formdata">XHR2's FormData is not supported</p>
-					<p id="progress">XHR2's upload progress isn't supported</p>
-				</article>
-			</div>
-			<div class="span4">
-				<h4>Gel Cap:</h4>
-				<form action = "cancelCap.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
-				</form>
-				<article>
-					<div id="holder2">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>
-			</div>
-			<div class="span4">
-				<h4>Eicosane:</h4>
-				<form action = "cancelEico.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
-				</form>
-				<article>
-					<div id="holder3">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>				
-			</div>
 		</div>
 		<div class  = "row">
 			<h2>Experimental Data:</h2>
@@ -124,6 +85,45 @@
 						</div>
 				    </div>
 				</form>					
+			</div>
+		</div>
+		<div class="row">
+			<h2>Data Files:</h2>
+			<div class="span4">
+				<h4>Raw Data:</h4>
+				<form action = "cancelRaw.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+				</form>
+				<article>
+					<div id="holder1">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+					<p id="filereader">File API & FileReader API not supported</p>
+					<p id="formdata">XHR2's FormData is not supported</p>
+					<p id="progress">XHR2's upload progress isn't supported</p>
+				</article>
+			</div>
+			<div class="span4">
+				<h4>Gel Cap:</h4>
+				<form action = "cancelCap.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+				</form>
+				<article>
+					<div id="holder2">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>
+			</div>
+			<div class="span4">
+				<h4>Eicosane:</h4>
+				<form action = "cancelEico.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+				</form>
+				<article>
+					<div id="holder3">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>				
 			</div>
 		</div>
 		<div class = "row">
