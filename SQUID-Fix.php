@@ -127,7 +127,9 @@
 			</div>
 		</div>
 		<div class = "row">
-			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
+			<form action = "run.php" method = "post">
+				<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
+			</form>
 		</div>
 
 		<style>
@@ -159,10 +161,7 @@
 					alert("Please fill all fields");
 				} 
 				else{
-					<?php
-						shell_exec('C:\Python33\python.exe SQUID-Fix.py');
-					?>
-					$.post('test.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
+					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
 				}
 			}
 		</script>
