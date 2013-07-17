@@ -65,9 +65,8 @@
 					<div class="control-group">
 						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
 						<div class = "controls">
-							<select class = "span2" onchange =
+							<select class = "span2" id = "pascalSelect" onchange =
 								'var selected = options[selectedIndex].index;
-								console.log(selected);
 								if(selected == 1){
 									document.getElementById("pascalField").style.visibility = "hidden";
 								}
@@ -77,18 +76,18 @@
 								<option>Apply</option>
 								<option>Don't Apply</option>							
 							</select>
-							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value">
+							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "">
 						</div>
 					</div>	
 				</form>
 			</div>
 			<div class="span4">
-				<form class="form-horizontal">
+				<form class="form-horizontal" method = "post">
 					<div class="control-group">
 						<label class="control-label" for="molWeight">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="appendedInput" type="text" value = "<?php system('C:\Python33\python.exe SampleMass.py', $sampleMass); ?>">
+								<input class="span1" id="sampleMass" name = "sampleMass" type="text" value = "<?php system('C:\Python33\python.exe SampleMass.py', $sampleMass); ?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -97,7 +96,7 @@
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="appendedInput" type="text">
+								<input class="span1" id="molWeight" type="text">
 								<span class="add-on">g mol<sup>-1</sup></span>
 							</div>
 						</div>
@@ -110,7 +109,7 @@
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="appendedInput" type="text">
+								<input class="span1" id="sampleEico" type="text">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -119,7 +118,7 @@
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="appendedInput" type="text">
+								<input class="span1" id="blankEico" type="text">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -128,9 +127,9 @@
 			</div>
 		</div>
 		<div class = "row">
-			<form action = "runPythonCorrection.php" method = "post">
-				<p><center><input type = "submit" class = "btn btn-large btn-primary" value = "Correct Data"/></center></p>
-			</form>
+<!--			<form action = "runPythonCorrection.php" method = "post">-->
+				<p><center><input type = "submit" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();"></center></p>
+	<!--		</form>-->
 		</div>
 
 		<style>
@@ -149,6 +148,37 @@
 			.fail { background: #c00; padding: 2px; color: #fff; }
 			.hidden { display: none !important;}
 		</style>
+		
+		<script>
+			function getData(){
+				var sampleMass = document.getElementById('sampleMass').value;
+				var molWeight = document.getElementById('molWeight').value;
+				var sampleEico = document.getElementById('sampleEico').value;
+				var blankEico = document.getElementById('blankEico').value;
+				var applyCorrection = document.getElementById('pascalSelect').value;
+				var pascalValue = document.getElementById('pascalField').value;
+				<?php
+					$sampleMass = $_GET['sampleMass'];
+					shell_exec('C:\Python33\python.exe test.py'.$sampleMass);
+				?>		
+				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || (applyCorrection === "Apply" && pascalValue === "")){
+						alert("Please fill all fields");
+				}
+				else{
+					
+					//	shell_exec('C:\Python33\python.exe SQUID-Fix.py');							
+					
+					console.log(sampleMass);
+					console.log(molWeight);
+					console.log(sampleEico);
+					console.log(blankEico);
+					console.log(applyCorrection);
+					if(applyCorrection === "Apply"){
+						console.log(pascalValue);
+					}
+				}
+			}
+		</script>
 			
 			<script>
 			var holder1 = document.getElementById('holder1'),

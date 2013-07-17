@@ -5,5 +5,6 @@ Mass of Eicosane Used In Sample (mg): 14
 Mass of Eicosane Used In Blank (mg): 21.18
 Molecular Weight of Sample (mg): 9.850
 Compound Weight of Sample (mg): 0.01829
+Pascal Value: 0.4
 Data Set X: temperature
 Data Set Y: long moment
