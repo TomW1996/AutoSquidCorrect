@@ -25,7 +25,7 @@
 			<!--Raw Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Raw Data:</h4>
-					<input type = "text" id = "rawName" readonly value = "<?php 
+					<input type = "text" id = "rawName" readonly value =    "<?php 
 																				if(file_exists("upload/rawName.txt")){
 																					$fr = fopen("upload/rawName.txt", "r");
 																					$name = fgets($fr);
@@ -33,7 +33,7 @@
 																					echo $name;
 																				} 
 																			?>">					
-					<form action = "cancelRaw.php" method = "post">
+					<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
 						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
 					</form>
 				<article>
@@ -49,7 +49,7 @@
 			<!--Gel Cap Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Gel Cap:</h4>
-				<input type = "text" id = "gelName" readonly value = "<?php 
+				<input type = "text" id = "gelName" readonly value =    "<?php 
 																			if(file_exists("upload/gelName.txt")){
 																				$fr = fopen("upload/gelName.txt", "r");
 																				$name = fgets($fr);
@@ -57,7 +57,7 @@
 																				echo $name;
 																			} 
 																		?>">
-				<form action = "cancelCap.php" method = "post">
+				<form action = "cancelCap.php" method = "post" onclick = "retainData();">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel2"/></p>
 				</form>
 				<article>
@@ -78,7 +78,7 @@
 																				echo $name;
 																			} 
 																		?>">
-				<form action = "cancelEico.php" method = "post">
+				<form action = "cancelEico.php" method = "post" onclick = "retainData();">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel3"/></p>
 				</form>
 				<article>
@@ -99,7 +99,19 @@
 					<div class="control-group">
 						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
 						<div class = "controls">
-							<select class = "span2" id = "pascalSelect" onchange =
+							<select class = "span2" id = "pascalSelect" 
+							selected = 
+								"<?php
+									if(file_exists("upload/saveDetails.txt")){
+										$fr = fopen("upload/saveDetails.txt", "r");
+										for($i = 0; $i < 5; $i++){
+											$data = fgets($fr);
+										}
+										fclose($fr);
+										echo $data;
+									} 
+								?>" 
+							onchange =
 								'var selected = options[selectedIndex].index;
 								if(selected == 1){
 									document.getElementById("pascalField").style.visibility = "hidden";
@@ -110,7 +122,16 @@
 								<option>Apply</option>
 								<option>Don't Apply</option>							
 							</select>
-							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "">
+							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "<?php
+																														if(file_exists("upload/saveDetails.txt")){
+																															$fr = fopen("upload/saveDetails.txt", "r");
+																															for($i = 0; $i < 6; $i++){
+																																$data = fgets($fr);
+																															}
+																															fclose($fr);
+																															echo $data;
+																														} 
+																													?>">
 						</div>
 					</div>	
 					<!--Pascal Correction-->
@@ -123,7 +144,16 @@
 						<label class="control-label" for="molWeight">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="sampleMass" name = "sampleMass" type="text" value = "">
+								<input class="span1" id="sampleMass" name = "sampleMass" type="text" value = "<?php
+																													if(file_exists("upload/saveDetails.txt")){
+																														$fr = fopen("upload/saveDetails.txt", "r");
+																														for($i = 0; $i < 1; $i++){
+																															$data = fgets($fr);
+																														}
+																														fclose($fr);
+																														echo $data;
+																													} 
+																												?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -134,7 +164,16 @@
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="molWeight" type="text">
+								<input class="span1" id="molWeight" type="text" value = "<?php
+																							if(file_exists("upload/saveDetails.txt")){
+																								$fr = fopen("upload/saveDetails.txt", "r");
+																								for($i = 0; $i < 2; $i++){
+																									$data = fgets($fr);
+																								}
+																								fclose($fr);
+																								echo $data;
+																							} 
+																						?>">
 								<span class="add-on">g mol<sup>-1</sup></span>
 							</div>
 						</div>
@@ -149,7 +188,16 @@
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="sampleEico" type="text">
+								<input class="span1" id="sampleEico" type="text" value = "<?php
+																								if(file_exists("upload/saveDetails.txt")){
+																									$fr = fopen("upload/saveDetails.txt", "r");
+																									for($i = 0; $i < 3; $i++){
+																										$data = fgets($fr);
+																									}
+																									fclose($fr);
+																									echo $data;
+																								} 
+																							?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -160,7 +208,16 @@
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="blankEico" type="text">
+								<input class="span1" id="blankEico" type="text" value = "<?php
+																							if(file_exists("upload/saveDetails.txt")){
+																								$fr = fopen("upload/saveDetails.txt", "r");
+																								for($i = 0; $i < 4; $i++){
+																									$data = fgets($fr);
+																								}
+																								fclose($fr);
+																								echo $data;
+																							} 
+																						?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -173,6 +230,10 @@
 		<!--Correct Button-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
+			<form action = "Download.php?file=rawData.txt_Corrected.txt" method = "post">
+				<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Download" /></center></p>
+			</form>
+			<center><a href="download.php?file=rawData.txt_Corrected.txt" class="links">Download</a></center>
 		</div>
 		<!--Correct Button-->
 
@@ -194,19 +255,6 @@
 		</style>
 		
 		<script>
-			function pic1(){
-				theImage = new Image(250,250);
-				theImage.src = "images/tick.jpg";
-				holder1.appendChild(theImage);
-			}
-			<?php	
-				if(file_exists("upload/gelName.txt")){
-					echo "<script> pic1(); </script>";
-				}		
-			?>
-		</script>
-		
-		<script>
 			function getData(){
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
@@ -214,15 +262,32 @@
 				var blankEico = $('#blankEico').val();
 				var applyCorrection = $('#pascalSelect').val();
 				var pascalValue = $('#pascalField').val();
-				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || (applyCorrection === "Apply" && pascalValue === "")){
+				var rawData = $('#rawName').val();
+				var gelData = $('#gelName').val();
+				var eicoData = $('#eicoName').val();
+				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData == "" || gelData == "" || eicoData == "" || (applyCorrection === "Apply" && pascalValue === "")){
 					alert("Please fill all fields");
 				} 
 				else{
 					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
 				}
 			}
+			
+			function retainData(){
+				var sampleMass = $('#sampleMass').val();
+				var molWeight = $('#molWeight').val();
+				var sampleEico = $('#sampleEico').val();
+				var blankEico = $('#blankEico').val();
+				var applyCorrection = $('#pascalSelect').val();
+				var selected = 0;
+				if(applyCorrection === "Apply"){
+					selected = 1;
+				}
+				var pascalValue = $('#pascalField').val();
+				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: selected, postPascalValue: pascalValue}, function(data){});
+			}
 		</script>
-		
+			
 			<script>
 			var holder1 = document.getElementById('holder1'),
 				tests = {
@@ -432,8 +497,6 @@
 				readfiles2(this.files);
 			  };
 			}
-			
-			
 			</script>
 			
 			<script>
@@ -539,6 +602,10 @@
 			
 			
 			</script>
+			
+			<?php
+				unlink("upload/saveDetails.txt")
+			?>
 
       <hr>
 
