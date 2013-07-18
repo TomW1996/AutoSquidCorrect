@@ -25,10 +25,17 @@
 			<!--Raw Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Raw Data:</h4>
-				<input type = "text" id = "rawName" readonly>
-				<form action = "cancelRaw.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
-				</form>
+					<input type = "text" id = "rawName" readonly value = "<?php 
+																				if(file_exists("upload/rawName.txt")){
+																					$fr = fopen("upload/rawName.txt", "r");
+																					$name = fgets($fr);
+																					fclose($fr);
+																					echo $name;
+																				} 
+																			?>">					
+					<form action = "cancelRaw.php" method = "post">
+						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
+					</form>
 				<article>
 					<div id="holder1">
 					</div>
@@ -42,9 +49,16 @@
 			<!--Gel Cap Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Gel Cap:</h4>
-				<input type = "text" id = "gelName" readonly>
+				<input type = "text" id = "gelName" readonly value = "<?php 
+																			if(file_exists("upload/gelName.txt")){
+																				$fr = fopen("upload/gelName.txt", "r");
+																				$name = fgets($fr);
+																				fclose($fr);
+																				echo $name;
+																			} 
+																		?>">
 				<form action = "cancelCap.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel2"/></p>
 				</form>
 				<article>
 					<div id="holder2">
@@ -56,9 +70,16 @@
 			<!--Eicosane Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Eicosane:</h4>
-				<input type = "text" id = "eicoName" readonly>
+				<input type = "text" id = "eicoName" readonly value = "<?php 
+																			if(file_exists("upload/eicoName.txt")){
+																				$fr = fopen("upload/eicoName.txt", "r");
+																				$name = fgets($fr);
+																				fclose($fr);
+																				echo $name;
+																			} 
+																		?>">
 				<form action = "cancelEico.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel3"/></p>
 				</form>
 				<article>
 					<div id="holder3">
@@ -173,6 +194,19 @@
 		</style>
 		
 		<script>
+			function pic1(){
+				theImage = new Image(250,250);
+				theImage.src = "images/tick.jpg";
+				holder1.appendChild(theImage);
+			}
+			<?php	
+				if(file_exists("upload/gelName.txt")){
+					echo "<script> pic1(); </script>";
+				}		
+			?>
+		</script>
+		
+		<script>
 			function getData(){
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
@@ -202,11 +236,6 @@
 				  formdata: document.getElementById('formdata'),
 				  progress: document.getElementById('progress')
 				},
-				acceptedTypes = {
-				  'image/png': true,
-				  'image/jpeg': true,
-				  'image/gif': true
-				},
 				progress = document.getElementById('uploadprogress'),
 				fileupload = document.getElementById('upload');
 
@@ -221,23 +250,24 @@
 				support[api].className = 'hidden';
 			  }
 			});
-
+			
 			function previewfile1(file) {
 				console.log("holder1");
-			  if (tests.filereader === true && acceptedTypes[file.type] === true) {
+			  if (tests.filereader === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
 				  var image = new Image();
 				  image.src = event.target.result;
 				  image.width = 250; // a fake resize
-				  holder1.appendChild(image);
+				  theImage = new Image(250,250);
+				  theImage.src = "images/tick.jpg";
+				  holder1.appendChild(theImage);
+				  document.getElementById("rawName").value = file.name;
 				};
 
 				reader.readAsDataURL(file);
 			  }  else {
-				holder1.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
-				console.log(file);
-				document.getElementById("rawName").value = file.name;
+				console.log(file);				
 			  }
 			}
 
@@ -267,6 +297,23 @@
 				  xhr.send(formData); 
 				}
 			}
+			
+			function fileExists(url) {
+				if(url){
+					var req = new XMLHttpRequest();
+					req.open('GET', url, false);
+					req.send();
+					return req.status==200;
+				} else {
+					return false;
+				}
+			}
+			
+			if(fileExists("upload/rawData.txt") == true){
+				theImage = new Image(250,250);
+				theImage.src = "images/tick.jpg";
+				holder1.appendChild(theImage);
+			}
 
 			if (tests.dnd) { 
 			  holder1.ondragover = function () { this.className = 'hover'; return false; };
@@ -274,7 +321,9 @@
 			  holder1.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				readfiles1(e.dataTransfer.files);
+				if(fileExists("upload/rawData.txt") == false){
+					readfiles1(e.dataTransfer.files);
+				}	
 			  }
 			} else {
 			  fileupload.className = 'hidden';
@@ -297,11 +346,6 @@
 				  formdata: document.getElementById('formdata'),
 				  progress: document.getElementById('progress')
 				},
-				acceptedTypes = {
-				  'image/png': true,
-				  'image/jpeg': true,
-				  'image/gif': true
-				},
 				progress = document.getElementById('uploadprogress'),
 				fileupload = document.getElementById('upload');
 
@@ -316,24 +360,31 @@
 				support[api].className = 'hidden';
 			  }
 			});
-
+			
 			function previewfile2(file) {
 				console.log("holder2");
-			  if (tests.filereader === true && acceptedTypes[file.type] === true) {
+			  if (tests.filereader === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
 				  var image = new Image();
 				  image.src = event.target.result;
 				  image.width = 250; // a fake resize
-				  holder2.appendChild(image);
+				  theImage = new Image(250,250);
+				  theImage.src = "images/tick.jpg";
+				  holder2.appendChild(theImage);
+				  document.getElementById("gelName").value = file.name;
 				};
 
 				reader.readAsDataURL(file);
 			  }  else {
-				holder2.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
-				console.log(file);
-				document.getElementById("gelName").value = file.name;
+				console.log(file);				
 			  }
+			}
+			
+			if(fileExists("upload/gelcapData.txt") == true){
+				theImage = new Image(250,250);
+				theImage.src = "images/tick.jpg";
+				holder2.appendChild(theImage);
 			}
 
 			function readfiles2(files) {
@@ -371,7 +422,9 @@
 			  holder2.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				readfiles2(e.dataTransfer.files);
+				if(fileExists("upload/gelcapData.txt") == false){
+					readfiles2(e.dataTransfer.files);
+				}
 			  }
 			} else {
 			  fileupload.className = 'hidden';
@@ -396,11 +449,6 @@
 				  formdata: document.getElementById('formdata'),
 				  progress: document.getElementById('progress')
 				},
-				acceptedTypes = {
-				  'image/png': true,
-				  'image/jpeg': true,
-				  'image/gif': true
-				},
 				progress = document.getElementById('uploadprogress'),
 				fileupload = document.getElementById('upload');
 
@@ -415,23 +463,31 @@
 				support[api].className = 'hidden';
 			  }
 			});
-
+			
+			if(fileExists("upload/eicoData.txt") == true){
+				theImage = new Image(250,250);
+				theImage.src = "images/tick.jpg";
+				holder3.appendChild(theImage);
+			}
+			
 			function previewfile3(file) {
 				console.log("holder3");
-			  if (tests.filereader === true && acceptedTypes[file.type] === true) {
+			  if (tests.filereader === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
 				  var image = new Image();
 				  image.src = event.target.result;
 				  image.width = 250; // a fake resize
-				  holder3.appendChild(image);
+				  theImage = new Image(250,250);
+				  theImage.src = "images/tick.jpg";
+				  holder3.appendChild(theImage);
+				  document.getElementById("eicoName").value = file.name;
 				};
 
 				reader.readAsDataURL(file);
 			  }  else {
-				holder3.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
-				document.getElementById("eicoName").value = file.name;
+				
 			  }
 			}
 
@@ -470,7 +526,9 @@
 			  holder3.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				readfiles3(e.dataTransfer.files);
+				if(fileExists("upload/eicoData.txt") == false){
+					readfiles3(e.dataTransfer.files);
+				}
 			  }
 			} else {
 			  fileupload.className = 'hidden';
