@@ -20,6 +20,10 @@
 			}
 			else
 			{
+				$fw = fopen("upload/rawName.txt", "w");
+				fwrite($fw, $_FILES["file"]["name"]);
+				fclose($fw);
+				
 				move_uploaded_file($_FILES["file"]["tmp_name"], "upload/rawData.txt");
 			}
 		}

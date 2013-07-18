@@ -3,7 +3,7 @@
   <head>  
     <title>SQUID-Fix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">  
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
   </head>  
   <body>  
     <div class="container">
@@ -19,6 +19,56 @@
 			</div>	
 		</div>
 		<!--Header-->
+		<!--Data Files Section-->
+		<div class="row">
+			<h2>Data Files:</h2>
+			<!--Raw Data Drop Upload Box-->
+			<div class="span4">
+				<h4>Raw Data:</h4>
+				<input type = "text" id = "rawName" readonly>
+				<form action = "cancelRaw.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
+				</form>
+				<article>
+					<div id="holder1">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+					<p id="filereader">File API & FileReader API not supported</p>
+					<p id="formdata">XHR2's FormData is not supported</p>
+					<p id="progress">XHR2's upload progress isn't supported</p>
+				</article>
+			</div>
+			<!--Raw Data Drop Upload Box-->
+			<!--Gel Cap Data Drop Upload Box-->
+			<div class="span4">
+				<h4>Gel Cap:</h4>
+				<input type = "text" id = "gelName" readonly>
+				<form action = "cancelCap.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+				</form>
+				<article>
+					<div id="holder2">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>
+			</div>
+			<!--Gel Cap Data Drop Upload Box-->
+			<!--Eicosane Data Drop Upload Box-->
+			<div class="span4">
+				<h4>Eicosane:</h4>
+				<input type = "text" id = "eicoName" readonly>
+				<form action = "cancelEico.php" method = "post">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
+				</form>
+				<article>
+					<div id="holder3">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>				
+			</div>
+			<!--Eicosane Data Drop Upload Box-->
+		</div>
+		<!--Data Files Section-->
 		<!--Experimental Data Section-->
 		<div class  = "row">	
 			<h2>Experimental Data:</h2>
@@ -52,7 +102,7 @@
 						<label class="control-label" for="molWeight">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="sampleMass" name = "sampleMass" type="text" value = "<?php system('C:\Python33\python.exe SampleMass.py', $sampleMass); ?>">
+								<input class="span1" id="sampleMass" name = "sampleMass" type="text" value = "">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -99,53 +149,6 @@
 			</div>
 		</div>
 		<!--Experimental Data Section-->
-		<!--Data Files Section-->
-		<div class="row">
-			<h2>Data Files:</h2>
-			<!--Raw Data Drop Upload Box-->
-			<div class="span4">
-				<h4>Raw Data:</h4>
-				<form action = "cancelRaw.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
-				</form>
-				<article>
-					<div id="holder1">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-					<p id="filereader">File API & FileReader API not supported</p>
-					<p id="formdata">XHR2's FormData is not supported</p>
-					<p id="progress">XHR2's upload progress isn't supported</p>
-				</article>
-			</div>
-			<!--Raw Data Drop Upload Box-->
-			<!--Gel Cap Data Drop Upload Box-->
-			<div class="span4">
-				<h4>Gel Cap:</h4>
-				<form action = "cancelCap.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
-				</form>
-				<article>
-					<div id="holder2">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>
-			</div>
-			<!--Gel Cap Data Drop Upload Box-->
-			<!--Eicosane Data Drop Upload Box-->
-			<div class="span4">
-				<h4>Eicosane:</h4>
-				<form action = "cancelEico.php" method = "post">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X"/></p>
-				</form>
-				<article>
-					<div id="holder3">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>				
-			</div>
-			<!--Eicosane Data Drop Upload Box-->
-		</div>
-		<!--Data Files Section-->
 		<!--Correct Button-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
@@ -185,7 +188,7 @@
 				}
 			}
 		</script>
-			
+		
 			<script>
 			var holder1 = document.getElementById('holder1'),
 				tests = {
@@ -234,6 +237,7 @@
 			  }  else {
 				holder1.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
+				document.getElementById("rawName").value = file.name;
 			  }
 			}
 
@@ -255,7 +259,6 @@
 					  if (event.lengthComputable) {
 						var complete = (event.loaded / event.total * 100 | 0);
 						if(complete === 100){
-							location.reload();
 						}
 					  }
 					}
@@ -329,6 +332,7 @@
 			  }  else {
 				holder2.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
+				document.getElementById("gelName").value = file.name;
 			  }
 			}
 
@@ -427,6 +431,7 @@
 			  }  else {
 				holder3.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
 				console.log(file);
+				document.getElementById("eicoName").value = file.name;
 			  }
 			}
 

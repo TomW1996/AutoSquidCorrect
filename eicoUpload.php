@@ -19,7 +19,10 @@
 				print($_FILES["file"]["name"] . " already exists. ");
 			}
 			else
-			{
+			{	
+				$fw = fopen("upload/eicoName.txt", "w");
+				fwrite($fw, $_FILES["file"]["name"]);
+				fclose($fw);
 				move_uploaded_file($_FILES["file"]["tmp_name"], "upload/eicoData.txt");
 			}
 		}
