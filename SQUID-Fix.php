@@ -604,7 +604,9 @@
 			</script>
 			
 			<?php
-				unlink("upload/saveDetails.txt")
+				if(file_exists("upload/saveDetails.txt")){
+					unlink("upload/saveDetails.txt");
+				}	
 			?>
 
       <hr>
