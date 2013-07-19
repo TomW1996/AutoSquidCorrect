@@ -12,6 +12,8 @@ compoundWeight = float(getInformation(6))
 dataX = getInformation(7).lower()
 dataY = getInformation(8).lower()
 pascalValue = getInformation(9)
+if pascalValue != "null":
+    pascalValue = float(pascalValue)
 
 #Get data from data files
 getData(rFilePath, "temperature.txt", "longMoment.txt", dataX, dataY)
@@ -50,11 +52,18 @@ correctedLongMoment = []
 chiData = []
 chiTData = []
 count = 0
-for i in rLongMoment:
-    correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
-    chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
-    chiTData.append(float(chiData[count]) * float(rTemperature[count]))
-    count = count + 1
+if pascalValue == "null":
+    for i in rLongMoment:
+        correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
+        chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
+        chiTData.append(float(chiData[count]) * float(rTemperature[count]))
+        count = count + 1
+else:
+    for i in rLongMoment:
+        correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count]))-pascalValue)
+        chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
+        chiTData.append(float(chiData[count]) * float(rTemperature[count]))
+        count = count + 1
 
 
 #Write corrected data to file

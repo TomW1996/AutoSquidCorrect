@@ -15,7 +15,7 @@
 					<p>SQUID-Fix is a powerful tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
 					and produce graphs as well as a downloadable file with all the calculated results.</p>
 				</div>
-					<img src = "images/squidpic.jpg" align = "right" width = 240>
+					<img src = "images/logo_mark1.png" align = "right" width = 240>
 			</div>	
 		</div>
 		<!--Header-->
@@ -26,7 +26,7 @@
 			<div class="span4">
 				<h4>Raw Data:</h4>
 					<input type = "text" id = "rawName" readonly value =    "<?php 
-																				if(file_exists("upload/rawName.txt")){
+																				if(file_exists("upload/rawName.txt") && file_exists("upload/rawData.txt")){
 																					$fr = fopen("upload/rawName.txt", "r");
 																					$name = fgets($fr);
 																					fclose($fr);
@@ -230,10 +230,10 @@
 		<!--Correct Button-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
-			<form action = "Download.php?file=rawData.txt_Corrected.txt" method = "post">
-				<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Download" /></center></p>
+			<form action="Download.php" method="post" name="downloadform"/>
+				<input name="file_name" value="rawData.txt_Corrected.txt" type="hidden" id = "download"/>
+				<p><center><input type="submit" class = "btn btn-large btn-primary" value="Download"></center></p>
 			</form>
-			<center><a href="download.php?file=rawData.txt_Corrected.txt" class="links">Download</a></center>
 		</div>
 		<!--Correct Button-->
 
@@ -265,11 +265,13 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val();
+				var download = $('#download').val();
 				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData == "" || gelData == "" || eicoData == "" || (applyCorrection === "Apply" && pascalValue === "")){
 					alert("Please fill all fields");
 				} 
 				else{
 					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
+					$.post('Download.php', {postDownload: download}, function(data){});
 				}
 			}
 			

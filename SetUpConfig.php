@@ -22,4 +22,23 @@
 	}
 	fclose($fw);
 	shell_exec('C:\Python33\python.exe SQUID-Fix.py');
+
+	if(file_exists("upload/rawData.txt")){
+		unlink("upload/rawData.txt");
+	}
+	if(file_exists("upload/gelcapData.txt")){
+		unlink("upload/gelcapData.txt");
+	}
+	if(file_exists("upload/eicoData.txt")){
+		unlink("upload/eicoData.txt");
+	}
+	if(file_exists("upload/gelName.txt")){
+		unlink("upload/gelName.txt");
+	}
+	if(file_exists("upload/eicoName.txt")){
+		unlink("upload/eicoName.txt");
+	}
+	if(file_exists("upload/config.txt")){
+		unlink("upload/config.txt");
+	}
 ?>
