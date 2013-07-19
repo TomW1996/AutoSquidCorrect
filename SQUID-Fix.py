@@ -38,7 +38,7 @@ elif len(bTemperature) >= len(rTemperature) and len(bTemperature) >= len(eTemper
 else:
     matchDataPoints(eTemperature, eLongMoment, rTemperature, rLongMoment, "matchedRecordedData.txt", "matchedEicoData.txt", 0)
     matchDataPoints(bTemperature, bLongMoment, eTemperature, eLongMoment, "matchedBlankData.txt", "matchedEicoData.txt", 1)
-
+   
 #Fill arrays with matched data
 rTemperature = restoreArray("matchedRecordedData.txt", 0)
 rLongMoment = restoreArray("matchedRecordedData.txt", 1)
@@ -64,7 +64,6 @@ else:
         chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
         chiTData.append(float(chiData[count]) * float(rTemperature[count]))
         count = count + 1
-
 
 #Write corrected data to file
 outputFile = rFilePath + "_Corrected.txt"

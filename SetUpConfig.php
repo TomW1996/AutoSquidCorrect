@@ -4,12 +4,28 @@
 	$sampleEico = $_POST['postSampleEico'];
 	$blankEico = $_POST['postBlankEico'];
 	$pascalValue = $_POST['postPascalValue'];
+	$eicoData = $_POST['postEicoData'];
 	$fw = fopen('upload/config.txt', 'w');
 	fwrite($fw, "Raw Data File: upload/rawData.txt"."\n");
 	fwrite($fw, "Gel Cap Data File: upload/gelcapData.txt"."\n");
-	fwrite($fw, "Eicosane Data File: upload/eicoData.txt"."\n");
-	fwrite($fw, "Eicosane - Sample Mass: ".$sampleEico."\n");
-	fwrite($fw, "Eicosane - Blank Mass: ".$blankEico."\n");
+	if($eicoData != ""){
+		fwrite($fw, "Eicosane Data File: upload/eicoData.txt"."\n");	
+	}
+	else{
+		fwrite($fw, "Eicosane Data File: null"."\n");
+	}
+	if($sampleEico != ""){
+		fwrite($fw, "Eicosane - Sample Mass: ".$sampleEico."\n");
+	}
+	else{
+		fwrite($fw, "Eicosane - Sample Mass: null"."\n");
+	}
+	if($blankEico != ""){
+		fwrite($fw, "Eicosane - Blank Mass: ".$blankEico."\n");
+	}
+	else{
+		fwrite($fw, "Eicosane - Blank Mass: null"."\n");
+	}
 	fwrite($fw, "Molecular Weight : ".$molWeight."\n");
 	fwrite($fw, "Sample Mass: ".$sampleMass."\n");
 	fwrite($fw, "Data Set X: temperature"."\n");
@@ -39,6 +55,6 @@
 		unlink("upload/eicoName.txt");
 	}
 	if(file_exists("upload/config.txt")){
-		unlink("upload/config.txt");
+	//	unlink("upload/config.txt");
 	}
 ?>

@@ -267,14 +267,16 @@
 				var eicoData = $('#eicoName').val();
 				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === "Apply" && pascalValue === "")){
 					if(sampleMass != "" && molWeight != "" && (sampleEico === "" && blankEico === "" && eicoData === "") && rawData != "" && gelData != "" && (applyCorrection === "Don't Apply" || (applyCorrection === "Apply" && pascalValue != ""))){
-						confirm("No eicosane was used");
+						if(confirm("No eicosane was used")){
+							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
+						}
 					}
 					else{
 						alert("Please fill all fields");
 					}
 				} 
 				else{
-					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
+					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
 				}
 			}
 			
