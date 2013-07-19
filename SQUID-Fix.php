@@ -265,13 +265,16 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val();
-				var download = $('#download').val();
-				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData == "" || gelData == "" || eicoData == "" || (applyCorrection === "Apply" && pascalValue === "")){
-					alert("Please fill all fields");
+				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === "Apply" && pascalValue === "")){
+					if(sampleMass != "" && molWeight != "" && (sampleEico === "" && blankEico === "" && eicoData === "") && rawData != "" && gelData != "" && (applyCorrection === "Don't Apply" || (applyCorrection === "Apply" && pascalValue != ""))){
+						confirm("No eicosane was used");
+					}
+					else{
+						alert("Please fill all fields");
+					}
 				} 
 				else{
 					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
-					$.post('Download.php', {postDownload: download}, function(data){});
 				}
 			}
 			
