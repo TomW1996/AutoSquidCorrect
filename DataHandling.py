@@ -105,3 +105,38 @@ def deleteFiles(eicoUsed):
         os.remove("eicoTemperature.txt")
         os.remove("eicoLongMoment.txt")
         os.remove("matchedEicoData.txt")
+
+def fillXYArray(xLocation ,yLocation):
+    dataX = []
+    dataY = []
+    dataPoints = []
+    fileRead = open("upload/rawData.txt_Corrected.txt", "r")
+    for i in range(2):
+        theLine = fileRead.readline()
+    while theLine:
+        lineData = theLine.split(",")
+        dataX.append(lineData[xLocation])
+        dataY.append(lineData[yLocation])
+        theLine = fileRead.readline()      
+    fileRead.close()
+    dataPoints = [dataX, dataY]
+    return dataPoints
+
+def setUpTXT(dataX, dataY, dataZ):
+    fileWrite = open("upload/temperature.txt", "w")
+    j = 0
+    for i in dataX:
+        fileWrite.write(i + "\n")
+    fileWrite.close()
+    fileWrite = open("upload/chi.txt", "w")
+    j = 0
+    for i in dataY:
+        fileWrite.write(i + "\n")
+    fileWrite.close()
+    fileWrite = open("upload/chiT.txt", "w")
+    j = 0
+    for i in dataY:
+        fileWrite.write(i + "\n")
+    fileWrite.close()
+        
+    

@@ -1,10 +1,10 @@
 Raw Data File: upload/rawData.txt
 Gel Cap Data File: upload/gelcapData.txt
 Eicosane Data File: upload/eicoData.txt
-Eicosane - Sample Mass: 10
-Eicosane - Blank Mass: 12.5
-Molecular Weight : 87.34
-Sample Mass: 43.2
+Eicosane - Sample Mass: 93
+Eicosane - Blank Mass: 13
+Molecular Weight : 27
+Sample Mass: 26
 Data Set X: temperature
 Data Set Y: long moment
 Pascal Correction Value: null
