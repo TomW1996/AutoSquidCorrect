@@ -94,13 +94,14 @@ def restoreArray(filePath, index):
     dataFile.close()
     return theArray
 
-def deleteFiles():
+def deleteFiles(eicoUsed):
     os.remove("temperature.txt")
     os.remove("longMoment.txt")
     os.remove("blankTemperature.txt")
     os.remove("blankLongMoment.txt")
-    os.remove("eicoTemperature.txt")
-    os.remove("eicoLongMoment.txt")
     os.remove("matchedRecordedData.txt")
     os.remove("matchedBlankData.txt")
-    os.remove("matchedEicoData.txt")
+    if(eicoUsed == True):
+        os.remove("eicoTemperature.txt")
+        os.remove("eicoLongMoment.txt")
+        os.remove("matchedEicoData.txt")

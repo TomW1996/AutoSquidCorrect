@@ -18,13 +18,13 @@
 		fwrite($fw, "Eicosane - Sample Mass: ".$sampleEico."\n");
 	}
 	else{
-		fwrite($fw, "Eicosane - Sample Mass: null"."\n");
+		fwrite($fw, "Eicosane - Sample Mass: 0"."\n");
 	}
 	if($blankEico != ""){
 		fwrite($fw, "Eicosane - Blank Mass: ".$blankEico."\n");
 	}
 	else{
-		fwrite($fw, "Eicosane - Blank Mass: null"."\n");
+		fwrite($fw, "Eicosane - Blank Mass: 0"."\n");
 	}
 	fwrite($fw, "Molecular Weight : ".$molWeight."\n");
 	fwrite($fw, "Sample Mass: ".$sampleMass."\n");

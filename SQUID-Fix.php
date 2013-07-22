@@ -19,77 +19,6 @@
 			</div>	
 		</div>
 		<!--Header-->
-		<!--Data Files Section-->
-		<div class="row">
-			<h2>Data Files:</h2>
-			<!--Raw Data Drop Upload Box-->
-			<div class="span4">
-				<h4>Raw Data:</h4>
-					<input type = "text" id = "rawName" readonly value =    "<?php 
-																				if(file_exists("upload/rawName.txt") && file_exists("upload/rawData.txt")){
-																					$fr = fopen("upload/rawName.txt", "r");
-																					$name = fgets($fr);
-																					fclose($fr);
-																					echo $name;
-																				} 
-																			?>">					
-					<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
-						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
-					</form>
-				<article>
-					<div id="holder1">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-					<p id="filereader">File API & FileReader API not supported</p>
-					<p id="formdata">XHR2's FormData is not supported</p>
-					<p id="progress">XHR2's upload progress isn't supported</p>
-				</article>
-			</div>
-			<!--Raw Data Drop Upload Box-->
-			<!--Gel Cap Data Drop Upload Box-->
-			<div class="span4">
-				<h4>Gel Cap:</h4>
-				<input type = "text" id = "gelName" readonly value =    "<?php 
-																			if(file_exists("upload/gelName.txt")){
-																				$fr = fopen("upload/gelName.txt", "r");
-																				$name = fgets($fr);
-																				fclose($fr);
-																				echo $name;
-																			} 
-																		?>">
-				<form action = "cancelCap.php" method = "post" onclick = "retainData();">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel2"/></p>
-				</form>
-				<article>
-					<div id="holder2">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>
-			</div>
-			<!--Gel Cap Data Drop Upload Box-->
-			<!--Eicosane Data Drop Upload Box-->
-			<div class="span4">
-				<h4>Eicosane:</h4>
-				<input type = "text" id = "eicoName" readonly value = "<?php 
-																			if(file_exists("upload/eicoName.txt")){
-																				$fr = fopen("upload/eicoName.txt", "r");
-																				$name = fgets($fr);
-																				fclose($fr);
-																				echo $name;
-																			} 
-																		?>">
-				<form action = "cancelEico.php" method = "post" onclick = "retainData();">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel3"/></p>
-				</form>
-				<article>
-					<div id="holder3">
-					</div>
-					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-				</article>				
-			</div>
-			<!--Eicosane Data Drop Upload Box-->
-		</div>
-		<!--Data Files Section-->
 		<!--Experimental Data Section-->
 		<div class  = "row">	
 			<h2>Experimental Data:</h2>
@@ -227,6 +156,77 @@
 			</div>
 		</div>
 		<!--Experimental Data Section-->
+		<!--Data Files Section-->
+		<div class="row">
+			<h2>Data Files:</h2>
+			<!--Raw Data Drop Upload Box-->
+			<div class="span4">
+				<h4>Raw Data:</h4>
+					<input type = "text" id = "rawName" readonly value =    "<?php 
+																				if(file_exists("upload/rawName.txt") && file_exists("upload/rawData.txt")){
+																					$fr = fopen("upload/rawName.txt", "r");
+																					$name = fgets($fr);
+																					fclose($fr);
+																					echo $name;
+																				} 
+																			?>">					
+					<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
+						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
+					</form>
+				<article>
+					<div id="holder1">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+					<p id="filereader">File API & FileReader API not supported</p>
+					<p id="formdata">XHR2's FormData is not supported</p>
+					<p id="progress">XHR2's upload progress isn't supported</p>
+				</article>
+			</div>
+			<!--Raw Data Drop Upload Box-->
+			<!--Gel Cap Data Drop Upload Box-->
+			<div class="span4">
+				<h4>Gel Cap:</h4>
+				<input type = "text" id = "gelName" readonly value =    "<?php 
+																			if(file_exists("upload/gelName.txt")){
+																				$fr = fopen("upload/gelName.txt", "r");
+																				$name = fgets($fr);
+																				fclose($fr);
+																				echo $name;
+																			} 
+																		?>">
+				<form action = "cancelCap.php" method = "post" onclick = "retainData();">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel2"/></p>
+				</form>
+				<article>
+					<div id="holder2">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>
+			</div>
+			<!--Gel Cap Data Drop Upload Box-->
+			<!--Eicosane Data Drop Upload Box-->
+			<div class="span4">
+				<h4>Eicosane:</h4>
+				<input type = "text" id = "eicoName" readonly value = "<?php 
+																			if(file_exists("upload/eicoName.txt")){
+																				$fr = fopen("upload/eicoName.txt", "r");
+																				$name = fgets($fr);
+																				fclose($fr);
+																				echo $name;
+																			} 
+																		?>">
+				<form action = "cancelEico.php" method = "post" onclick = "retainData();">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel3"/></p>
+				</form>
+				<article>
+					<div id="holder3">
+					</div>
+					<p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+				</article>				
+			</div>
+			<!--Eicosane Data Drop Upload Box-->
+		</div>
+		<!--Data Files Section-->
 		<!--Correct Button-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
