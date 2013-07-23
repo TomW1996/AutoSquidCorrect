@@ -54,7 +54,7 @@
 							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "<?php
 																														if(file_exists("upload/saveDetails.txt")){
 																															$fr = fopen("upload/saveDetails.txt", "r");
-																															for($i = 0; $i < 6; $i++){
+																															for($i = 0; $i < 5; $i++){
 																																$data = fgets($fr);
 																															}
 																															fclose($fr);
@@ -73,16 +73,16 @@
 						<label class="control-label" for="molWeight">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="sampleMass" name = "sampleMass" type="text" value = "<?php
-																													if(file_exists("upload/saveDetails.txt")){
-																														$fr = fopen("upload/saveDetails.txt", "r");
-																														for($i = 0; $i < 1; $i++){
-																															$data = fgets($fr);
-																														}
-																														fclose($fr);
-																														echo $data;
-																													} 
-																												?>">
+								<input class="span1" onkeypress="return isNumberKey(event)" id="sampleMass" name = "sampleMass" type="text" value = "<?php
+																																						if(file_exists("upload/saveDetails.txt")){
+																																							$fr = fopen("upload/saveDetails.txt", "r");
+																																							for($i = 0; $i < 1; $i++){
+																																								$data = fgets($fr);
+																																							}
+																																							fclose($fr);
+																																							echo $data;
+																																						} 
+																																					?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -93,16 +93,16 @@
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="molWeight" type="text" value = "<?php
-																							if(file_exists("upload/saveDetails.txt")){
-																								$fr = fopen("upload/saveDetails.txt", "r");
-																								for($i = 0; $i < 2; $i++){
-																									$data = fgets($fr);
-																								}
-																								fclose($fr);
-																								echo $data;
-																							} 
-																						?>">
+								<input class="span1" onkeypress="return isNumberKey(event)" id="molWeight" type="text" value = "<?php
+																																	if(file_exists("upload/saveDetails.txt")){
+																																		$fr = fopen("upload/saveDetails.txt", "r");
+																																		for($i = 0; $i < 2; $i++){
+																																			$data = fgets($fr);
+																																		}
+																																		fclose($fr);
+																																		echo $data;
+																																	} 
+																																?>">
 								<span class="add-on">g mol<sup>-1</sup></span>
 							</div>
 						</div>
@@ -117,16 +117,16 @@
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="sampleEico" type="text" value = "<?php
-																								if(file_exists("upload/saveDetails.txt")){
-																									$fr = fopen("upload/saveDetails.txt", "r");
-																									for($i = 0; $i < 3; $i++){
-																										$data = fgets($fr);
-																									}
-																									fclose($fr);
-																									echo $data;
-																								} 
-																							?>">
+								<input class="span1" onkeypress="return isNumberKey(event)" id="sampleEico" type="text" value = "<?php
+																																	if(file_exists("upload/saveDetails.txt")){
+																																		$fr = fopen("upload/saveDetails.txt", "r");
+																																		for($i = 0; $i < 3; $i++){
+																																			$data = fgets($fr);
+																																		}
+																																		fclose($fr);
+																																		echo $data;
+																																	} 
+																																?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -137,16 +137,16 @@
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" id="blankEico" type="text" value = "<?php
-																							if(file_exists("upload/saveDetails.txt")){
-																								$fr = fopen("upload/saveDetails.txt", "r");
-																								for($i = 0; $i < 4; $i++){
-																									$data = fgets($fr);
-																								}
-																								fclose($fr);
-																								echo $data;
-																							} 
-																						?>">
+								<input class="span1" onkeypress="return isNumberKey(event)" id="blankEico" type="text" value = "<?php
+																																	if(file_exists("upload/saveDetails.txt")){
+																																		$fr = fopen("upload/saveDetails.txt", "r");
+																																		for($i = 0; $i < 4; $i++){
+																																			$data = fgets($fr);
+																																		}
+																																		fclose($fr);
+																																		echo $data;
+																																	} 
+																																?>">
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -260,6 +260,17 @@
 		</script>
 		
 		<script>
+		function isNumberKey(evt)
+		{
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46){
+				return false;
+			}
+			return true;
+		}
+		</script>
+		
+		<script>
 			function getData(){
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
@@ -270,12 +281,10 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val();
-				var fileName = $('#download').val();
-				console.log(fileName);
-				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === "Apply" && pascalValue === "")){
-					if(sampleMass != "" && molWeight != "" && (sampleEico === "" && blankEico === "" && eicoData === "") && rawData != "" && gelData != "" && (applyCorrection === "Don't Apply" || (applyCorrection === "Apply" && pascalValue != ""))){
+				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === 1 && pascalValue === "")){
+					if((sampleEico === "" && blankEico === "" && eicoData === "") && sampleMass != "" && molWeight != "" && (applyCorrection == 0 || (applyCorrection == 1 && pascalValue != ""))){
 						if(confirm("No eicosane was used")){
-							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData, postFileName: fileName}, function(data){});
+							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
 							document.getElementById("downloadButton").style.visibility = "visible";
 						}
 					}
@@ -284,7 +293,7 @@
 					}
 				} 
 				else{
-					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData, postFileName: fileName}, function(data){});
+					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
 					document.getElementById("downloadButton").style.visibility = "visible";
 				}
 			}
@@ -293,15 +302,9 @@
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
 				var sampleEico = $('#sampleEico').val();
-				var blankEico = $('#blankEico').val();
-				var applyCorrection = $('#pascalSelect').val();
-				var selected = 0;
-				if(applyCorrection === "Apply"){
-					selected = 1;
-				}
+				var blankEico = $('#blankEico').val();;
 				var pascalValue = $('#pascalField').val();
-				var downloadHide = document.getElementById("downloadButton").style.visibility;
-				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: selected, postPascalValue: pascalValue, postDownloadHide: downloadHide}, function(data){});
+				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
 			}
 		</script>
 			

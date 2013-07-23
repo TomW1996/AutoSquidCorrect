@@ -9,11 +9,11 @@ compoundEico = float(getInformation(3))
 testEico = float(getInformation(4))
 molecularWeight = float(getInformation(5))
 compoundWeight = float(getInformation(6))
-dataX = getInformation(7).lower()
-dataY = getInformation(8).lower()
-pascalValue = getInformation(9)
+pascalValue = getInformation(7)
 if pascalValue != "null":
     pascalValue = float(pascalValue)
+dataX = "temperature"
+dataY = "long moment"
 
 #Get data from data files
 getData(rFilePath, "temperature.txt", "longMoment.txt", dataX, dataY)
