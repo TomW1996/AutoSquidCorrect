@@ -15,7 +15,7 @@
 					<p>SQUID-Fix is a powerful tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
 					and produce graphs as well as a downloadable file with all the calculated results.</p>
 				</div>
-					<img src = "images/logo_mark1.png" align = "right" width = 240>
+					<img src = "" align = "right" width = 240>
 			</div>	
 		</div>
 		<!--Header-->
@@ -42,14 +42,14 @@
 								?>" 
 							onchange =
 								'var selected = options[selectedIndex].index;
-								if(selected == 1){
+								if(selected == 0){
 									document.getElementById("pascalField").style.visibility = "hidden";
 								}
 								else{
 									document.getElementById("pascalField").style.visibility = "visible";
 								}'>
-								<option>Apply</option>
-								<option>Don't Apply</option>							
+								<option value = "0">Don't Apply</option>
+								<option value = "1">Apply</option>							
 							</select>
 							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "<?php
 																														if(file_exists("upload/saveDetails.txt")){
@@ -229,10 +229,10 @@
 		<!--Data Files Section-->
 		<!--Correct Button-->
 		<div class = "row">
-			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = "getData();" /></center></p>
+			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = 'getData();'/></center></p>
 			<form action="Download.php" method="post" name="downloadform"/>
-				<input name="file_name" value="rawData.txt_Corrected.txt" type="hidden" id = "download"/>
-				<p><center><input type="submit" class = "btn btn-large btn-primary" value="Download"></center></p>
+				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/>
+				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download"></center></p>
 			</form>
 		</div>
 		<!--Correct Button-->
@@ -255,6 +255,11 @@
 		</style>
 		
 		<script>
+			document.getElementById("downloadButton").style.visibility = "hidden";
+			document.getElementById("pascalField").style.visibility = "hidden";
+		</script>
+		
+		<script>
 			function getData(){
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
@@ -265,10 +270,13 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val();
+				var fileName = $('#download').val();
+				console.log(fileName);
 				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === "Apply" && pascalValue === "")){
 					if(sampleMass != "" && molWeight != "" && (sampleEico === "" && blankEico === "" && eicoData === "") && rawData != "" && gelData != "" && (applyCorrection === "Don't Apply" || (applyCorrection === "Apply" && pascalValue != ""))){
 						if(confirm("No eicosane was used")){
-							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
+							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData, postFileName: fileName}, function(data){});
+							document.getElementById("downloadButton").style.visibility = "visible";
 						}
 					}
 					else{
@@ -276,7 +284,8 @@
 					}
 				} 
 				else{
-					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
+					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData, postFileName: fileName}, function(data){});
+					document.getElementById("downloadButton").style.visibility = "visible";
 				}
 			}
 			
@@ -291,7 +300,8 @@
 					selected = 1;
 				}
 				var pascalValue = $('#pascalField').val();
-				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: selected, postPascalValue: pascalValue}, function(data){});
+				var downloadHide = document.getElementById("downloadButton").style.visibility;
+				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: selected, postPascalValue: pascalValue, postDownloadHide: downloadHide}, function(data){});
 			}
 		</script>
 			
@@ -609,12 +619,12 @@
 			
 			
 			</script>
-			
-			<?php
-				if(file_exists("upload/saveDetails.txt")){
-					unlink("upload/saveDetails.txt");
-				}	
-			?>
+	
+		<?php
+			if(file_exists("upload/saveDetails.txt")){
+				unlink("upload/saveDetails.txt");
+			}	
+		?>
 
       <hr>
 

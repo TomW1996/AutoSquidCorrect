@@ -5,37 +5,66 @@
 	$blankEico = $_POST['postBlankEico'];
 	$pascalValue = $_POST['postPascalValue'];
 	$eicoData = $_POST['postEicoData'];
-	$fw = fopen('upload/config.txt', 'w');
-	fwrite($fw, "Raw Data File: upload/rawData.txt"."\n");
-	fwrite($fw, "Gel Cap Data File: upload/gelcapData.txt"."\n");
-	if($eicoData != ""){
-		fwrite($fw, "Eicosane Data File: upload/eicoData.txt"."\n");	
+	$file = $_POST['postFileName'];
+	
+	function setConfig(){
+		$fw = fopen('upload/config.txt', 'w');
+		fwrite($fw, "Raw Data File: upload/rawData.txt"."\n");
+		fwrite($fw, "Gel Cap Data File: upload/gelcapData.txt"."\n");
+		if($eicoData != ""){
+			fwrite($fw, "Eicosane Data File: upload/eicoData.txt"."\n");	
+		}
+		else{
+			fwrite($fw, "Eicosane Data File: null"."\n");
+		}
+		if($sampleEico != ""){
+			fwrite($fw, "Eicosane - Sample Mass: ".$sampleEico."\n");
+		}
+		else{
+			fwrite($fw, "Eicosane - Sample Mass: 0"."\n");
+		}
+		if($blankEico != ""){
+			fwrite($fw, "Eicosane - Blank Mass: ".$blankEico."\n");
+		}
+		else{
+			fwrite($fw, "Eicosane - Blank Mass: 0"."\n");
+		}
+		fwrite($fw, "Molecular Weight : ".$molWeight."\n");
+		fwrite($fw, "Sample Mass: ".$sampleMass."\n");
+		fwrite($fw, "Data Set X: temperature"."\n");
+		fwrite($fw, "Data Set Y: long moment"."\n");
+		if($pascalValue == ""){
+			fwrite($fw, "Pascal Correction Value: null");
+		}
+		else{
+			fwrite($fw, "Pascal Correction Value: ".$pascalValue);
+		}
+		fwrite($fw, "test");
+		fclose($fw);
 	}
-	else{
-		fwrite($fw, "Eicosane Data File: null"."\n");
+	
+	function run(){
+		shell_exec('C:\Python33\python.exe SQUID-Fix.py');
 	}
-	if($sampleEico != ""){
-		fwrite($fw, "Eicosane - Sample Mass: ".$sampleEico."\n");
+	
+	function download($file){
+		if(file_exists("upload/rawName.txt")){
+			$fw = fopen('upload/test.txt', 'w');
+			fwrite($fw, $file);
+			fclose($fw);
+			$fr = fopen("upload/rawName.txt", "r");
+			$name = fgets($fr);
+			fclose($fr);
+			$parts = explode('.', $name);
+			$name = $parts[0].'_Corrected.txt';
+			header('Content-type: text/plain');
+			header('Content-Disposition: attachment; filename='.$name.'');
+			readfile('upload/'.$file);
+		}
 	}
-	else{
-		fwrite($fw, "Eicosane - Sample Mass: 0"."\n");
-	}
-	if($blankEico != ""){
-		fwrite($fw, "Eicosane - Blank Mass: ".$blankEico."\n");
-	}
-	else{
-		fwrite($fw, "Eicosane - Blank Mass: 0"."\n");
-	}
-	fwrite($fw, "Molecular Weight : ".$molWeight."\n");
-	fwrite($fw, "Sample Mass: ".$sampleMass."\n");
-	fwrite($fw, "Data Set X: temperature"."\n");
-	fwrite($fw, "Data Set Y: long moment"."\n");
-	if($pascalValue == ""){
-		fwrite($fw, "Pascal Correction Value: null");
-	}
-	else{
-		fwrite($fw, "Pascal Correction Value: ".$pascalValue);
-	}
-	fclose($fw);
-	shell_exec('C:\Python33\python.exe SQUID-Fix.py');
+	
+	setConfig();
+	run();
+	download($file);
+	
 ?>

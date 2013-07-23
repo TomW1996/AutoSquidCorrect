@@ -5,7 +5,7 @@
 		fclose($fr);
 		$parts = explode('.', $name);
 		$name = $parts[0].'_Corrected.txt';
-		$file = $_POST['file_name'];
+		$file = $_POST['download'];
 		header('Content-type: text/plain');
 		header('Content-Disposition: attachment; filename='.$name.'');
 		readfile('upload/'.$file);
