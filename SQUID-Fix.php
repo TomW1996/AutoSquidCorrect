@@ -1,6 +1,12 @@
 <!DOCTYPE html>  
 <html>  
-  <head>  
+  <head>
+  <!--
+  With thanks to:
+  James 'Pro Bro' Walsh
+  Morten 'Pop' Albring
+  All of the people who have been plagiarised
+  -->
     <title>SQUID-Fix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -12,10 +18,11 @@
 			<div class = "row">
 				<div class = "span7">
 					<h1>SQUID-Fix</h1>
-					<p>SQUID-Fix is a powerful tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
-					and produce graphs as well as a downloadable file with all the calculated results.</p>
+					<p>SQUID-Fix is a tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
+					and produce graphs as well as a downloadable file with all the calculated results. To begin, please enter the appropriate data
+					and drag your data files into the correct boxes. If you didn't use Eicosane, please leave all related fileds blank.</p>
 				</div>
-					<img src = "" align = "right" width = 240>
+					<img src = "images/pro_logo.png" align = "right" width = 280>
 			</div>	
 		</div>
 		<!--Header-->
@@ -51,7 +58,7 @@
 								<option value = "0">Don't Apply</option>
 								<option value = "1">Apply</option>							
 							</select>
-							<input class = "input-mini" type = "text" id = "pascalField" placeholder="Value" value = "<?php
+							<input class = "input-mini" onkeypress="return isNumberKey(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
 																														if(file_exists("upload/saveDetails.txt")){
 																															$fr = fopen("upload/saveDetails.txt", "r");
 																															for($i = 0; $i < 5; $i++){
@@ -260,6 +267,29 @@
 		</script>
 		
 		<script>
+		window.onload = function() {
+		 var myInput = document.getElementById('sampleMass');
+		 myInput.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		 myInput = document.getElementById('molWeight');
+		 myInput.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		 myInput = document.getElementById('sampleEico');
+		 myInput.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		 myInput = document.getElementById('blankEico');
+		 myInput.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		 myInput = document.getElementById('pascalField');
+		 myInput.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		}
+		
 		function isNumberKey(evt)
 		{
 			var charCode = (evt.which) ? evt.which : event.keyCode
@@ -328,10 +358,6 @@
 			  if (tests[api] === false) {
 				support[api].className = 'fail';
 			  } else {
-				// FFS. I could have done el.hidden = true, but IE doesn't support
-				// hidden, so I tried to create a polyfill that would extend the
-				// Element.prototype, but then IE10 doesn't even give me access
-				// to the Element object. Brilliant.
 				support[api].className = 'hidden';
 			  }
 			});
