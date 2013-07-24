@@ -10,6 +10,40 @@
     <title>SQUID-Fix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+	
+	<?php
+		if(file_exists("upload/saveDetails.txt")){
+			//Refresh was due to cancellation - don't delete files
+		}
+		else{
+			//Delete files
+			if(file_exists("upload/rawData.txt")){
+				unlink("upload/rawData.txt");
+			}
+			if(file_exists("upload/rawName.txt")){
+				unlink("upload/rawName.txt");
+			}
+			if(file_exists("upload/gelcapData.txt")){
+				unlink("upload/gelcapData.txt");
+			}
+			if(file_exists("upload/gelName.txt")){
+				unlink("upload/gelName.txt");
+			}
+			if(file_exists("upload/eicoData.txt")){
+				unlink("upload/eicoData.txt");
+			}
+			if(file_exists("upload/eicoName.txt")){
+				unlink("upload/eicoName.txt");
+			}
+			if(file_exists("upload/rawData.txt_Corrected.txt")){
+				unlink("upload/rawData.txt_Corrected.txt");
+			}
+			if(file_exists("upload/config.txt")){
+				unlink("upload/config.txt");
+			}
+		}
+	?>
+	
   </head>  
   <body>  
     <div class="container">
