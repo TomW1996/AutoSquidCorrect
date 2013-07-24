@@ -182,7 +182,7 @@
 																				} 
 																			?>"><!--Fill with name of raw data file-->					
 					<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
-						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
+						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelRaw"/></p>
 					</form>
 				<article>
 					<div id="holder1">
@@ -206,7 +206,7 @@
 																			} 
 																		?>"><!--Fill with name of gel cap data file-->	
 				<form action = "cancelCap.php" method = "post" onclick = "retainData();">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel2"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelCap"/></p>
 				</form>
 				<article>
 					<div id="holder2">
@@ -227,7 +227,7 @@
 																			} 
 																		?>"><!--Fill with name of eicosane data file-->	
 				<form action = "cancelEico.php" method = "post" onclick = "retainData();">
-					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel3"/></p>
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelEico"/></p>
 				</form>
 				<article>
 					<div id="holder3">
@@ -268,6 +268,9 @@
 		
 		<script>
 			document.getElementById("downloadButton").style.visibility = "hidden";
+			document.getElementById("cancelRaw").style.visibility = "hidden";
+			document.getElementById("cancelCap").style.visibility = "hidden";
+			document.getElementById("cancelEico").style.visibility = "hidden";
 			<?php	//Sets pascal value visibility state after cancellation refresh
 				if(file_exists("upload/saveDetails.txt")){
 					$fr = fopen("upload/saveDetails.txt", "r");
@@ -375,6 +378,7 @@
 				  theImage.src = "images/tick.jpg";
 				  holder1.appendChild(theImage);	//Display tick picture in box
 				  document.getElementById("rawName").value = file.name;	//Fill text field with name of file
+				  document.getElementById("cancelRaw").style.visibility = "visible";
 				};
 
 				reader.readAsDataURL(file);	//Read in the file
@@ -477,6 +481,7 @@
 				  theImage.src = "images/tick.jpg";
 				  holder2.appendChild(theImage);
 				  document.getElementById("gelName").value = file.name;
+				  document.getElementById("cancelCap").style.visibility = "visible";
 				};
 
 				reader.readAsDataURL(file);
@@ -576,6 +581,7 @@
 				  theImage.src = "images/tick.jpg";
 				  holder3.appendChild(theImage);
 				  document.getElementById("eicoName").value = file.name;
+				  document.getElementById("cancelEico").style.visibility = "visible";
 				};
 
 				reader.readAsDataURL(file);
