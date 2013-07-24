@@ -346,12 +346,28 @@
 				var pascalValue = $('#pascalField').val();
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
-				var eicoData = $('#eicoName').val();
-				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === 1 && pascalValue === "")){ //Are all fields filled?
+				var eicoData = $('#eicoName').val()
+		
+				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection == 1 && pascalValue === "")){ //Are all fields filled?
 					if((sampleEico === "" && blankEico === "" && eicoData === "") && sampleMass != "" && molWeight != "" && (applyCorrection == 0 || (applyCorrection == 1 && pascalValue != ""))){ //If not, are all eicosane fields empty, with the rest filled?
-						if(confirm("No eicosane was used")){ //Check they don't need eicosane
-							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
-							document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
+						if(parseFloat(sampleMass)/1 == sampleMass){
+							if(parseFloat(molWeight)/1 == molWeight){
+								if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
+									if(confirm("No eicosane was used")){ //Check they don't need eicosane
+										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
+										document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
+									}
+								}
+								else{
+									alert("Pascal Correction Value was entered incorrectly");
+								}
+							}
+							else{
+								alert("Molecular Weight was entered incorrectly");
+							}
+						}
+						else{
+							alert("Sample Mass was entered incorrectly");
 						}
 					}
 					else{
@@ -359,8 +375,33 @@
 					}
 				} 
 				else{	//If all fields are filled
-					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
-					document.getElementById("downloadButton").style.visibility = "visible";
+					if(parseFloat(sampleMass)/1 == sampleMass){
+						if(parseFloat(molWeight)/1 == molWeight){
+							if(parseFloat(sampleEico)/1 == sampleEico){
+								if(parseFloat(blankEico)/1 == blankEico){
+									if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
+										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
+										document.getElementById("downloadButton").style.visibility = "visible";			
+									}
+									else{
+										alert("Pascal Correction Value was entered incorrectly");
+									}
+								}
+								else{
+									alert("Eicosane Blank Mass was entered incorrectly");
+								}
+							}
+							else{
+								alert("Eicosane Sample Mass was entered incorrectly");
+							}
+						}
+						else{
+							alert("Molecular Weight was entered incorrectly");
+						}
+					}
+					else{
+						alert("Sample Mass was entered incorrectly");
+					}
 				}
 			}
 			
