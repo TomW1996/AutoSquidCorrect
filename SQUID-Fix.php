@@ -96,7 +96,7 @@
 									}									
 								?>
 							</select>	
-							<input class = "input-mini" onkeypress="return isNumberKey(event)" onpaste = "return false;" type = "text" id = "pascalField" placeholder="Value" value = "<?php
+							<input class = "input-mini" onkeypress="return isNumberKey(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
 																														if(file_exists("upload/saveDetails.txt")){
 																															$fr = fopen("upload/saveDetails.txt", "r");
 																															for($i = 0; $i < 5; $i++){
@@ -118,7 +118,7 @@
 						<label class="control-label" for="sampleMass">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="sampleMass" name = "sampleMass" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" id="sampleMass" name = "sampleMass" type="text" value = "<?php
 																																						if(file_exists("upload/saveDetails.txt")){
 																																							$fr = fopen("upload/saveDetails.txt", "r");
 																																							for($i = 0; $i < 1; $i++){
@@ -138,7 +138,7 @@
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="molWeight" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" id="molWeight" type="text" value = "<?php
 																																	if(file_exists("upload/saveDetails.txt")){
 																																		$fr = fopen("upload/saveDetails.txt", "r");
 																																		for($i = 0; $i < 2; $i++){
@@ -162,7 +162,7 @@
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="sampleEico" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" id="sampleEico" type="text" value = "<?php
 																																	if(file_exists("upload/saveDetails.txt")){
 																																		$fr = fopen("upload/saveDetails.txt", "r");
 																																		for($i = 0; $i < 3; $i++){
@@ -182,7 +182,7 @@
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="blankEico" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" id="blankEico" type="text" value = "<?php
 																																	if(file_exists("upload/saveDetails.txt")){
 																																		$fr = fopen("upload/saveDetails.txt", "r");
 																																		for($i = 0; $i < 4; $i++){
