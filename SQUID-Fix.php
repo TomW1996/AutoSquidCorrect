@@ -361,7 +361,7 @@
 		</script>
 			
 			<script>
-			var holder1 = document.getElementById('holder1'),
+			var holder1 = document.getElementById('holder1'), //Get the raw data drag/drop box
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
 				  dnd: 'draggable' in document.createElement('span'),
@@ -385,20 +385,16 @@
 			});
 			
 			function previewfile1(file) {
-				console.log("holder1");
 			  if (tests.filereader === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
-				  var image = new Image();
-				  image.src = event.target.result;
-				  image.width = 250; // a fake resize
 				  theImage = new Image(250,250);
 				  theImage.src = "images/tick.jpg";
-				  holder1.appendChild(theImage);
-				  document.getElementById("rawName").value = file.name;
+				  holder1.appendChild(theImage);	//Display tick picture in box
+				  document.getElementById("rawName").value = file.name;	//Fill text field with name of file
 				};
 
-				reader.readAsDataURL(file);
+				reader.readAsDataURL(file);	//Read in the file
 			  }  else {
 				console.log(file);				
 			  }
@@ -412,10 +408,9 @@
 				  previewfile1(files[i]);
 				}
 
-				// now post a new XHR request
 				if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
-				  xhr.open('POST', 'rawUpload.php');
+				  xhr.open('POST', 'rawUpload.php');	//Send the file data to the upload PHP script
 
 				  if (tests.progress) {
 					xhr.upload.onprogress = function (event) {
@@ -431,7 +426,7 @@
 				}
 			}
 			
-			function fileExists(url) {
+			function fileExists(url) {	//Check to see if a file has been uploaded
 				if(url){
 					var req = new XMLHttpRequest();
 					req.open('GET', url, false);
@@ -442,31 +437,31 @@
 				}
 			}
 			
-			if(fileExists("upload/rawData.txt") == true){
+			if(fileExists("upload/rawData.txt") == true){ //If the raw data file is in the upload folder, after refreshing, display the tick
 				theImage = new Image(250,250);
 				theImage.src = "images/tick.jpg";
 				holder1.appendChild(theImage);
 			}
 
 			if (tests.dnd) { 
-			  holder1.ondragover = function () { this.className = 'hover'; return false; };
+			  holder1.ondragover = function () { this.className = 'hover'; return false; };	//Change the colour of the box on dragover.
 			  holder1.ondragend = function () { this.className = ''; return false; };
 			  holder1.ondrop = function (e) {
 				this.className = '';
 				e.preventDefault();
-				if(fileExists("upload/rawData.txt") == false){
+				if(fileExists("upload/rawData.txt") == false){	//Only read/upload the file if there is not already a raw data file stored in the upload folder
 					readfiles1(e.dataTransfer.files);
 				}	
 			  }
 			} else {
-			  fileupload.className = 'hidden';
+			  fileupload.className = 'hidden';	//If there is a problem with the boxes, use a regular upload button
 			  fileupload.querySelector('input').onchange = function () {
 				readfiles1(this.files);
 			  };
 			}
 			</script>
 			
-			<script>
+			<script> //Drag/drop uploader script for gel cap box
 			var holder2 = document.getElementById('holder2'),
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
@@ -486,10 +481,6 @@
 			  if (tests[api] === false) {
 				support[api].className = 'fail';
 			  } else {
-				// FFS. I could have done el.hidden = true, but IE doesn't support
-				// hidden, so I tried to create a polyfill that would extend the
-				// Element.prototype, but then IE10 doesn't even give me access
-				// to the Element object. Brilliant.
 				support[api].className = 'hidden';
 			  }
 			});
@@ -499,9 +490,6 @@
 			  if (tests.filereader === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
-				  var image = new Image();
-				  image.src = event.target.result;
-				  image.width = 250; // a fake resize
 				  theImage = new Image(250,250);
 				  theImage.src = "images/tick.jpg";
 				  holder2.appendChild(theImage);
@@ -528,7 +516,6 @@
 				  previewfile2(files[i]);
 				}
 
-				// now post a new XHR request
 				if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
 				  xhr.open('POST', 'gelcapUpload.php');
@@ -567,7 +554,7 @@
 			}
 			</script>
 			
-			<script>
+			<script>	//Drag/drop uploader script for eicosane box
 			var holder3 = document.getElementById('holder3'),
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
@@ -587,10 +574,6 @@
 			  if (tests[api] === false) {
 				support[api].className = 'fail';
 			  } else {
-				// FFS. I could have done el.hidden = true, but IE doesn't support
-				// hidden, so I tried to create a polyfill that would extend the
-				// Element.prototype, but then IE10 doesn't even give me access
-				// to the Element object. Brilliant.
 				support[api].className = 'hidden';
 			  }
 			});
@@ -606,9 +589,6 @@
 			  if (tests.filereader === true) {
 				var reader = new FileReader();
 				reader.onload = function (event) {
-				  var image = new Image();
-				  image.src = event.target.result;
-				  image.width = 250; // a fake resize
 				  theImage = new Image(250,250);
 				  theImage.src = "images/tick.jpg";
 				  holder3.appendChild(theImage);
@@ -630,7 +610,6 @@
 				  previewfile3(files[i]);
 				}
 
-				// now post a new XHR request
 				if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
 				  xhr.open('POST', 'eicoUpload.php');
