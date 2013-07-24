@@ -20,7 +20,7 @@
 					<h1>SQUID-Fix</h1>
 					<p>SQUID-Fix is a tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
 					and produce graphs as well as a downloadable file with all the calculated results. To begin, please enter the appropriate data
-					and drag your data files into the correct boxes. If you didn't use Eicosane, please leave all related fileds blank.</p>
+					and drag your data files into the correct boxes. If you didn't use Eicosane, leave all related fileds blank.</p>
 				</div>
 					<img src = "images/pro_logo.png" align = "right" width = 280>
 			</div>	
