@@ -5,7 +5,8 @@
 	$blankEico = $_POST['postBlankEico'];
 	$pascalValue = $_POST['postPascalValue'];
 	$eicoData = $_POST['postEicoData'];
-
+	$applyCorrection = $_POST['postApplyCorrection'];
+	
 	$fw = fopen('upload/config.txt', 'w');
 	fwrite($fw, "Raw Data File: upload/rawData.txt"."\n");
 	fwrite($fw, "Gel Cap Data File: upload/gelcapData.txt"."\n");
@@ -29,7 +30,7 @@
 	}
 	fwrite($fw, "Molecular Weight : ".$molWeight."\n");
 	fwrite($fw, "Sample Mass: ".$sampleMass."\n");
-	if($pascalValue == ""){
+	if($applyCorrection == 0){
 		fwrite($fw, "Pascal Correction Value: null");
 	}
 	else{

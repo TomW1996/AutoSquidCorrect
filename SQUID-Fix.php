@@ -5,7 +5,7 @@
   With thanks to:
   James 'Pro Bro' Walsh
   Morten 'Pop' Albring
-  All of the people who have been plagiarised
+  The good people of the internet
   -->
     <title>SQUID-Fix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
@@ -36,14 +36,14 @@
 						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
 						<div class = "controls">
 							<select class = "span2" id = "pascalSelect"  onchange =
-																				'var selected = options[selectedIndex].index;
+																				'var selected = options[selectedIndex].index;	
 																				if(selected == 0){
 																					document.getElementById("pascalField").style.visibility = "hidden";
 																				}
 																				else{
 																					document.getElementById("pascalField").style.visibility = "visible";
-																				}'>
-								<?php
+																				}'> <!--Used to display the text field when the user selects the apply option-->
+								<?php	//Set the state of the dropdown after refresh, to keep page the same after cancelling an uploaded file.
 									if(file_exists("upload/saveDetails.txt")){
 										$fr = fopen("upload/saveDetails.txt", "r");
 										for($i = 0; $i < 6; $i++){
@@ -71,7 +71,7 @@
 																															fclose($fr);
 																															echo $data;
 																														} 
-																													?>">
+																													?>"><!--Set value - retained from before refresh-->
 						</div>
 					</div>	
 					<!--Pascal Correction-->
@@ -93,7 +93,7 @@
 																																							fclose($fr);
 																																							echo $data;
 																																						} 
-																																					?>">
+																																					?>"><!--Set value - retained from before refresh-->
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -113,7 +113,7 @@
 																																		fclose($fr);
 																																		echo $data;
 																																	} 
-																																?>">
+																																?>"><!--Set value - retained from before refresh-->
 								<span class="add-on">g mol<sup>-1</sup></span>
 							</div>
 						</div>
@@ -137,7 +137,7 @@
 																																		fclose($fr);
 																																		echo $data;
 																																	} 
-																																?>">
+																																?>"><!--Set value - retained from before refresh-->
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -157,7 +157,7 @@
 																																		fclose($fr);
 																																		echo $data;
 																																	} 
-																																?>">
+																																?>"><!--Set value - retained from before refresh-->
 								<span class="add-on">mg</span>
 							</div>
 						</div>
@@ -180,7 +180,7 @@
 																					fclose($fr);
 																					echo $name;
 																				} 
-																			?>">					
+																			?>"><!--Fill with name of raw data file-->					
 					<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
 						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel1"/></p>
 					</form>
@@ -204,7 +204,7 @@
 																				fclose($fr);
 																				echo $name;
 																			} 
-																		?>">
+																		?>"><!--Fill with name of gel cap data file-->	
 				<form action = "cancelCap.php" method = "post" onclick = "retainData();">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel2"/></p>
 				</form>
@@ -225,7 +225,7 @@
 																				fclose($fr);
 																				echo $name;
 																			} 
-																		?>">
+																		?>"><!--Fill with name of eicosane data file-->	
 				<form action = "cancelEico.php" method = "post" onclick = "retainData();">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancel3"/></p>
 				</form>
@@ -238,15 +238,15 @@
 			<!--Eicosane Data Drop Upload Box-->
 		</div>
 		<!--Data Files Section-->
-		<!--Correct Button-->
+		<!--Buttons-->
 		<div class = "row">
-			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = 'getData();'/></center></p>
+			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = 'getData();'/></center></p><!--Runs correction script when button clicked-->
 			<form action="Download.php" method="post" name="downloadform"/>
-				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/>
+				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/><!--Runs download script when button clicked-->
 				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download"></center></p>
 			</form>
 		</div>
-		<!--Correct Button-->
+		<!--Buttons-->
 
 		<style>
 			#holder1 { border: 10px dashed #ccc; width: 250px; min-height: 250px; margin: 20px auto;}
@@ -266,25 +266,25 @@
 		</style>
 		
 		<script>
-			<?php
-				if(file_exists("upload/saveDetails.txt")){
-					$fr = fopen("upload/saveDetails.txt", "r");
+			<?php	//Sets download button hidden/visible state to same as before refresh after a canceelation
+				if(file_exists("upload/saveDetails.txt")){	//Check file exists
+					$fr = fopen("upload/saveDetails.txt", "r");	//Open file
 					for($i = 0; $i < 7; $i++){
-						$data = fgets($fr);
+						$data = fgets($fr);	//Store the 7th line to $data
 					}
 					fclose($fr);
-					if($data == 1){
+					if($data == 1){	//Set state depending on value of $data
 						echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
 					}
 					if($data == 0){
 						echo 'document.getElementById("downloadButton").style.visibility = "visible";';
 					}
 				}
-				else{
+				else{ //Default state if file cannot be found - the page was refreshed but not due to cancellation
 					echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
 				}
 			?>
-			<?php
+			<?php	//Sets pascal value visibility state after cancellation refresh
 				if(file_exists("upload/saveDetails.txt")){
 					$fr = fopen("upload/saveDetails.txt", "r");
 					for($i = 0; $i < 6; $i++){
@@ -305,18 +305,18 @@
 		</script>
 		
 		<script>	
-		function isNumberKey(evt)
+		function isNumberKey(evt)	//Checks that entered keys are acceptable on each key press - validation only numbers and .
 		{
 			var charCode = (evt.which) ? evt.which : event.keyCode
-			if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46){
-				return false;
+			if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46){	//If key isn't a number or .
+				return false;	//Don't allow key true
 			}
-			return true;
+			return true;	//Key can be typed
 		}
 		</script>
 		
 		<script>
-			function getData(){
+			function getData(){	//Get values from text fields to use in correction script
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
 				var sampleEico = $('#sampleEico').val();
@@ -326,19 +326,19 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val();
-				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === 1 && pascalValue === "")){
-					if((sampleEico === "" && blankEico === "" && eicoData === "") && sampleMass != "" && molWeight != "" && (applyCorrection == 0 || (applyCorrection == 1 && pascalValue != ""))){
-						if(confirm("No eicosane was used")){
-							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
-							document.getElementById("downloadButton").style.visibility = "visible";
+				if(sampleMass === "" || molWeight === "" || sampleEico === "" || blankEico === "" || rawData === "" || gelData === "" || eicoData === "" || (applyCorrection === 1 && pascalValue === "")){ //Are all fields filled?
+					if((sampleEico === "" && blankEico === "" && eicoData === "") && sampleMass != "" && molWeight != "" && (applyCorrection == 0 || (applyCorrection == 1 && pascalValue != ""))){ //If not, are all eicosane fields empty, with the rest filled?
+						if(confirm("No eicosane was used")){ //Check they don't need eicosane
+							$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
+							document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
 						}
 					}
 					else{
-						alert("Please fill all fields");
+						alert("Please fill all fields"); //Remind them to fill all fields
 					}
 				} 
 				else{
-					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
+					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
 					document.getElementById("downloadButton").style.visibility = "visible";
 				}
 			}
