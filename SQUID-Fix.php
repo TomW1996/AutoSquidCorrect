@@ -35,30 +35,34 @@
 					<div class="control-group">
 						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
 						<div class = "controls">
-							<select class = "span2" id = "pascalSelect" 
-							selected = 
-								"<?php
+							<select class = "span2" id = "pascalSelect"  onchange =
+																				'var selected = options[selectedIndex].index;
+																				if(selected == 0){
+																					document.getElementById("pascalField").style.visibility = "hidden";
+																				}
+																				else{
+																					document.getElementById("pascalField").style.visibility = "visible";
+																				}'>
+								<?php
 									if(file_exists("upload/saveDetails.txt")){
 										$fr = fopen("upload/saveDetails.txt", "r");
-										for($i = 0; $i < 5; $i++){
+										for($i = 0; $i < 6; $i++){
 											$data = fgets($fr);
 										}
 										fclose($fr);
-										echo $data;
-									} 
-								?>" 
-							onchange =
-								'var selected = options[selectedIndex].index;
-								if(selected == 0){
-									document.getElementById("pascalField").style.visibility = "hidden";
-								}
-								else{
-									document.getElementById("pascalField").style.visibility = "visible";
-								}'>
-								<option value = "0">Don't Apply</option>
-								<option value = "1">Apply</option>							
-							</select>
-							<input class = "input-mini" onkeypress="return isNumberKey(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
+										if($data == 0){
+											echo'<option value = "0" selected>Do Not Apply</option></br><option value = "1">Apply</option>';
+										}
+										else if($data == 1){
+											echo'<option value = "0">Do Not Apply</option></br><option value = "1" selected>Apply</option>';
+										}
+									}
+									else{
+										echo'<option value = "0" selected>Do Not Apply</option></br><option value = "1">Apply</option>';
+									}									
+								?>
+							</select>	
+							<input class = "input-mini" onkeypress="return isNumberKey(event)" onpaste = "return false;" type = "text" id = "pascalField" placeholder="Value" value = "<?php
 																														if(file_exists("upload/saveDetails.txt")){
 																															$fr = fopen("upload/saveDetails.txt", "r");
 																															for($i = 0; $i < 5; $i++){
@@ -77,10 +81,10 @@
 				<form class="form-horizontal" method = "post">
 					<!--Sample Mass-->
 					<div class="control-group">
-						<label class="control-label" for="molWeight">Sample Mass:</label>
+						<label class="control-label" for="sampleMass">Sample Mass:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" id="sampleMass" name = "sampleMass" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="sampleMass" name = "sampleMass" type="text" value = "<?php
 																																						if(file_exists("upload/saveDetails.txt")){
 																																							$fr = fopen("upload/saveDetails.txt", "r");
 																																							for($i = 0; $i < 1; $i++){
@@ -100,7 +104,7 @@
 						<label class="control-label" for="molWeight">Molecular Weight:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" id="molWeight" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="molWeight" type="text" value = "<?php
 																																	if(file_exists("upload/saveDetails.txt")){
 																																		$fr = fopen("upload/saveDetails.txt", "r");
 																																		for($i = 0; $i < 2; $i++){
@@ -124,7 +128,7 @@
 						<label class="control-label" for="sampleEico">Mass of Eicosane - Sample:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" id="sampleEico" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="sampleEico" type="text" value = "<?php
 																																	if(file_exists("upload/saveDetails.txt")){
 																																		$fr = fopen("upload/saveDetails.txt", "r");
 																																		for($i = 0; $i < 3; $i++){
@@ -144,7 +148,7 @@
 						<label class="control-label" for="blankEico">Mass of Eicosane - Blank:</label>
 						<div class="controls">
 							<div class="input-append">
-								<input class="span1" onkeypress="return isNumberKey(event)" id="blankEico" type="text" value = "<?php
+								<input class="span1" onkeypress="return isNumberKey(event)" onpaste = "return false;" id="blankEico" type="text" value = "<?php
 																																	if(file_exists("upload/saveDetails.txt")){
 																																		$fr = fopen("upload/saveDetails.txt", "r");
 																																		for($i = 0; $i < 4; $i++){
@@ -262,34 +266,45 @@
 		</style>
 		
 		<script>
-			document.getElementById("downloadButton").style.visibility = "hidden";
-			document.getElementById("pascalField").style.visibility = "hidden";
+			<?php
+				if(file_exists("upload/saveDetails.txt")){
+					$fr = fopen("upload/saveDetails.txt", "r");
+					for($i = 0; $i < 7; $i++){
+						$data = fgets($fr);
+					}
+					fclose($fr);
+					if($data == 1){
+						echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
+					}
+					if($data == 0){
+						echo 'document.getElementById("downloadButton").style.visibility = "visible";';
+					}
+				}
+				else{
+					echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
+				}
+			?>
+			<?php
+				if(file_exists("upload/saveDetails.txt")){
+					$fr = fopen("upload/saveDetails.txt", "r");
+					for($i = 0; $i < 6; $i++){
+						$data = fgets($fr);
+					}
+					fclose($fr);
+					if($data == 0){
+						echo 'document.getElementById("pascalField").style.visibility = "hidden";';
+					}
+					else if($data == 1){
+						echo 'document.getElementById("pascalField").style.visibility = "visible";';
+					}
+				}
+				else{
+					echo 'document.getElementById("pascalField").style.visibility = "hidden";';
+				}
+			?>
 		</script>
 		
-		<script>
-		window.onload = function() {
-		 var myInput = document.getElementById('sampleMass');
-		 myInput.onpaste = function(e) {
-		   e.preventDefault();
-		 }
-		 myInput = document.getElementById('molWeight');
-		 myInput.onpaste = function(e) {
-		   e.preventDefault();
-		 }
-		 myInput = document.getElementById('sampleEico');
-		 myInput.onpaste = function(e) {
-		   e.preventDefault();
-		 }
-		 myInput = document.getElementById('blankEico');
-		 myInput.onpaste = function(e) {
-		   e.preventDefault();
-		 }
-		 myInput = document.getElementById('pascalField');
-		 myInput.onpaste = function(e) {
-		   e.preventDefault();
-		 }
-		}
-		
+		<script>	
 		function isNumberKey(evt)
 		{
 			var charCode = (evt.which) ? evt.which : event.keyCode
@@ -334,7 +349,13 @@
 				var sampleEico = $('#sampleEico').val();
 				var blankEico = $('#blankEico').val();;
 				var pascalValue = $('#pascalField').val();
-				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue}, function(data){});
+				var applyPascal = $('#pascalSelect').val();
+				var downloadHide = document.getElementById("downloadButton").style.visibility;
+				var hidden = 0;
+				if(downloadHide == "hidden"){
+					hidden = 1;
+				}
+				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postHidden: hidden}, function(data){});
 			}
 		</script>
 			
@@ -648,12 +669,12 @@
 			
 			
 			</script>
-	
-		<?php
-			if(file_exists("upload/saveDetails.txt")){
-				unlink("upload/saveDetails.txt");
-			}	
-		?>
+			
+			<?php
+				if(file_exists("upload/saveDetails.txt")){
+					unlink("upload/saveDetails.txt");
+				}
+			?>
 
       <hr>
 
