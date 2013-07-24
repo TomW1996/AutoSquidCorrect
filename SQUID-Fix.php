@@ -267,24 +267,7 @@
 		</style>
 		
 		<script>
-			<?php	//Sets download button hidden/visible state to same as before refresh after a canceelation
-				if(file_exists("upload/saveDetails.txt")){	//Check file exists
-					$fr = fopen("upload/saveDetails.txt", "r");	//Open file
-					for($i = 0; $i < 7; $i++){
-						$data = fgets($fr);	//Store the 7th line to $data
-					}
-					fclose($fr);
-					if($data == 1){	//Set state depending on value of $data
-						echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
-					}
-					if($data == 0){
-						echo 'document.getElementById("downloadButton").style.visibility = "visible";';
-					}
-				}
-				else{ //Default state if file cannot be found - the page was refreshed but not due to cancellation
-					echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
-				}
-			?>
+			document.getElementById("downloadButton").style.visibility = "hidden";
 			<?php	//Sets pascal value visibility state after cancellation refresh
 				if(file_exists("upload/saveDetails.txt")){
 					$fr = fopen("upload/saveDetails.txt", "r");

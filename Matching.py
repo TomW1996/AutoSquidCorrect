@@ -3,6 +3,7 @@ def matchDataPoints(tempA, lmA, tempB, lmB, filePathA, filePathB, iteration):
     deletions = 0
     startDelete = False
     count = 0
+    startIndex = 0
     for i in tempA:
         i = float(i)
         j = 0
@@ -23,6 +24,7 @@ def matchDataPoints(tempA, lmA, tempB, lmB, filePathA, filePathB, iteration):
             else:
                 deletions = deletions + 1
                 startDelete = True
+                startIndex = startIndex + 1
         else:
             deletions = deletions + 1
         count = count + 1
@@ -30,10 +32,7 @@ def matchDataPoints(tempA, lmA, tempB, lmB, filePathA, filePathB, iteration):
     #Write data to file
     dataWrite = open(filePathA, "w")
     lmCount = 0
-    startIndex = 0
-    if startDelete == True:
-        startIndex = 1
-    for i in range(startIndex, len(tempA) - deletions + 1):
+    for i in range(startIndex, len(tempA) - deletions):
         dataWrite.write(repr(float(tempA[i])) + "," + repr(matchedLM[lmCount]) + "\n")
         lmCount = lmCount + 1
     dataWrite.close()
@@ -42,6 +41,6 @@ def matchDataPoints(tempA, lmA, tempB, lmB, filePathA, filePathB, iteration):
         startIndex = 0
         if startDelete == True:
             startIndex = 1
-        for i in range(startIndex, len(tempA) - deletions + 1):
+        for i in range(startIndex, len(tempA) - deletions):
             dataWrite.write(repr(float(tempA[i])) + "," + (lmA[i]))
         dataWrite.close()
