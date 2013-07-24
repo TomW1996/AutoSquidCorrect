@@ -36,7 +36,7 @@
 	else{
 		fwrite($fw, "Pascal Correction Value: ".$pascalValue);
 	}
-	fclose($fw);
+	fclose($fw);	//Close file writer
 
 	shell_exec('C:\Python33\python.exe SQUID-Fix.py');	//Run python correction script
 ?>
