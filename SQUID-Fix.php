@@ -247,7 +247,8 @@
 			</form>
 		</div>
 		<!--Buttons-->
-
+	
+		<!--CSS Styling for drag/drop boxes-->
 		<style>
 			#holder1 { border: 10px dashed #ccc; width: 250px; min-height: 250px; margin: 20px auto;}
 			#holder1.hover { border: 10px dashed #0c0; }
@@ -337,13 +338,13 @@
 						alert("Please fill all fields"); //Remind them to fill all fields
 					}
 				} 
-				else{
-					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){});
+				else{	//If all fields are filled
+					$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
 					document.getElementById("downloadButton").style.visibility = "visible";
 				}
 			}
 			
-			function retainData(){
+			function retainData(){	//Get field data and visibility states of dropdown & download button
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
 				var sampleEico = $('#sampleEico').val();
@@ -355,7 +356,7 @@
 				if(downloadHide == "hidden"){
 					hidden = 1;
 				}
-				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postHidden: hidden}, function(data){});
+				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postHidden: hidden}, function(data){}); //Send information to separate PHP script
 			}
 		</script>
 			
@@ -671,15 +672,15 @@
 			</script>
 			
 			<?php
-				if(file_exists("upload/saveDetails.txt")){
-					unlink("upload/saveDetails.txt");
-				}
+				if(file_exists("upload/saveDetails.txt")){	//Check that file exists
+					unlink("upload/saveDetails.txt");	//Delete file - file used to retain values of fields stored before cancellation refresh, 
+				}										//so needs to be deleted straight away to prevent values staying permanently
 			?>
 
       <hr>
 
       <footer>
-        <p>&copy; Tom Wordsworth 2013</p>
+        <p>&copy; Tom Wordsworth 2013</p> <!--Displayed at the bottom of the page-->
       </footer>
 
     </div> <!-- /container -->
