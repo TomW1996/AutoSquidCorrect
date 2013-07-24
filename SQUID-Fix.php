@@ -54,7 +54,7 @@
 					<h1>SQUID-Fix</h1>
 					<p>SQUID-Fix is a tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
 					and produce graphs as well as a downloadable file with all the calculated results. To begin, please enter the appropriate data
-					and drag your data files into the correct boxes. If you didn't use Eicosane, leave all related fileds blank.</p>
+					and drag your data files into the correct boxes. If you didn't use Eicosane, leave all related fields blank.</p>
 				</div>
 					<img src = "images/pro_logo.png" align = "right" width = 280>
 			</div>	
@@ -73,9 +73,11 @@
 																				'var selected = options[selectedIndex].index;	
 																				if(selected == 0){
 																					document.getElementById("pascalField").style.visibility = "hidden";
+																					document.getElementById("pascalMagnitude").style.visibility = "hidden";
 																				}
 																				else{
 																					document.getElementById("pascalField").style.visibility = "visible";
+																					document.getElementById("pascalMagnitude").style.visibility = "visible";
 																				}'> <!--Used to display the text field when the user selects the apply option-->
 								<?php	//Set the state of the dropdown after refresh, to keep page the same after cancelling an uploaded file.
 									if(file_exists("upload/saveDetails.txt")){
@@ -95,17 +97,20 @@
 										echo'<option value = "0" selected>Do Not Apply</option></br><option value = "1">Apply</option>';
 									}									
 								?>
-							</select>	
-							<input class = "input-mini" onkeypress="return isNumberKey(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
-																														if(file_exists("upload/saveDetails.txt")){
-																															$fr = fopen("upload/saveDetails.txt", "r");
-																															for($i = 0; $i < 5; $i++){
-																																$data = fgets($fr);
-																															}
-																															fclose($fr);
-																															echo $data;
-																														} 
-																													?>"><!--Set value - retained from before refresh-->
+							</select>
+							<div class = "input-append">
+								<input class = "input-mini" onkeypress="return isNumberKey(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
+																															if(file_exists("upload/saveDetails.txt")){
+																																$fr = fopen("upload/saveDetails.txt", "r");
+																																for($i = 0; $i < 5; $i++){
+																																	$data = fgets($fr);
+																																}
+																																fclose($fr);
+																																echo $data;
+																															} 
+																														?>"><!--Set value - retained from before refresh-->
+								<span class="add-on" id = "pascalMagnitude">x10<sup>-6</sup></span>
+							</div>
 						</div>
 					</div>	
 					<!--Pascal Correction-->
@@ -314,13 +319,16 @@
 					fclose($fr);
 					if($data == 0){
 						echo 'document.getElementById("pascalField").style.visibility = "hidden";';
+						echo 'document.getElementById("pascalMagnitude").style.visibility = "hidden";';
 					}
 					else if($data == 1){
 						echo 'document.getElementById("pascalField").style.visibility = "visible";';
+						echo 'document.getElementById("pascalMagnitude").style.visibility = "visible";';
 					}
 				}
 				else{
 					echo 'document.getElementById("pascalField").style.visibility = "hidden";';
+					echo 'document.getElementById("pascalMagnitude").style.visibility = "hidden";';
 				}
 			?>
 		</script>

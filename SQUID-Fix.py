@@ -11,7 +11,7 @@ molecularWeight = float(getInformation(5))
 compoundWeight = float(getInformation(6))
 pascalValue = getInformation(7)
 if pascalValue != "null":
-    pascalValue = float(pascalValue)
+    pascalValue = (float(pascalValue) * 10**-6)
 dataX = "temperature"
 dataY = "long moment"
 
@@ -70,7 +70,7 @@ if compoundEico != 0 and testEico != 0:
             count = count + 1
     else:
         for i in rLongMoment:
-            correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count]))-pascalValue)
+            correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
             chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
@@ -78,13 +78,13 @@ else:
     if pascalValue == "null":
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((float(bLongMoment[count])))))
-            chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
+            chiData.append(((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))-pascalValue)
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
     else:
         for i in rLongMoment:
-            correctedLongMoment.append(float(i) - (((float(bLongMoment[count]))))-pascalValue)
-            chiData.append((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))
+            correctedLongMoment.append(float(i) - (((float(bLongMoment[count])))))
+            chiData.append(((correctedLongMoment[count]*molecularWeight)/(1000*compoundWeight))-pascalValue)
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
 
