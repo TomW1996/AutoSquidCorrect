@@ -61,42 +61,52 @@ if compoundEico != 0 and testEico != 0:
 #Correct data by subtracting blank data from recorded data
 correctedLongMoment = []
 chiData = []
+uncorrectedChiData = []
 chiTData = []
+uncorrectedChiTData = []
 count = 0
 if compoundEico != 0 and testEico != 0:
     if pascalValue == "null":
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
             chiData.append((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))
+            uncorrectedChiData.append((float(rLongMoment[count])/field)/((compoundWeight/1000)/molecularWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
+            uncorrectedChiTData.append(float(uncorrectedChiData[count]) * float(rTemperature[count]))
             count = count + 1
     else:
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
             chiData.append(((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))-pascalValue)
+            uncorrectedChiData.append((float(rLongMoment[count])/field)/((compoundWeight/1000)/molecularWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
+            uncorrectedChiTData.append(float(uncorrectedChiData[count]) * float(rTemperature[count]))
             count = count + 1
 else:
     if pascalValue == "null":
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((float(bLongMoment[count])))))
             chiData.append((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))
+            uncorrectedChiData.append((float(rLongMoment[count])/field)/((compoundWeight/1000)/molecularWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
+            uncorrectedChiTData.append(float(uncorrectedChiData[count]) * float(rTemperature[count]))
             count = count + 1
     else:
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((float(bLongMoment[count])))))
             chiData.append(((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))-pascalValue)
+            uncorrectedChiData.append((float(rLongMoment[count])/field)/((compoundWeight/1000)/molecularWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
+            uncorrectedChiTData.append(float(uncorrectedChiData[count]) * float(rTemperature[count]))
             count = count + 1
 
 #Write corrected data to file
 outputFile = rFilePath + "_Corrected.txt"
 dataWrite = open(outputFile, "w")
 count = 0
-dataWrite.write("Temperature (K),Uncorrected Long Moment (emu),Corrected Long Moment (emu),Chi,ChiT" + "\n")
+dataWrite.write("Temperature (K),Uncorrected Long Moment (emu),Corrected Long Moment (emu),Uncorrected Chi,Chi,Uncorrected ChiT,ChiT" + "\n")
 for i in correctedLongMoment:
-    dataWrite.write(rTemperature[count] + "," + repr(float(rLongMoment[count])) + "," + repr(i) + "," + repr(chiData[count]) + "," + repr(chiTData[count]) + "\n")
+    dataWrite.write(rTemperature[count] + "," + repr(float(rLongMoment[count])) + "," + repr(i) + "," + repr(uncorrectedChiData[count]) + "," + repr(chiData[count]) + "," + repr(uncorrectedChiTData[count]) + "," + repr(chiTData[count]) + "\n")
     count = count + 1 
 dataWrite.close()
 

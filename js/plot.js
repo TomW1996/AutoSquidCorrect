@@ -11,8 +11,8 @@ parseSpectra = function (txt) {
 		//Lines are parsed into columns by specific formatting of my data
 		//Probably a more robust, more general way of doing this
 		firstCol[i] = parseFloat(lines[i].split(",")[0]);
-		secondCol[i] = parseFloat(lines[i].split(",")[2]);
-		thirdCol[i] = parseFloat(lines[i].split(",")[1]);
+		secondCol[i] = parseFloat(lines[i].split(",")[1]);
+		thirdCol[i] = parseFloat(lines[i].split(",")[2]);
 	}
 	
 
