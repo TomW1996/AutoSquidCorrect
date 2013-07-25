@@ -1,53 +1,23 @@
 parseSpectra = function (txt) {
 
-	var txt_lines = txt.split('\n');
-	var number_of_lines = txt_lines.length;		
-	
-	//Initatilising arrays
-	//First column is field values
-	//Second column is absorption values
-	//Third colum is going to be the first derivative of col 2 wrt col 1
-
-	var graphData= [[0,0],[0,0],[0,0]];	//final data array containing col1 and col3
+	var lines = txt.split('\n');
+	var lineAmount = lines.length;		
 	var firstCol = [],
 	 secondCol = [],
 	 thirdCol = [],
 	 tempData = [];	//temp array used to create 2d array
 
-	 
-	
-	
-	var str = "";
-	for (var i=0;i<number_of_lines-2;i++) {
-	//Lines are parsed into columns by specific formatting of my data
-	//Probably a more robust, more general way of doing this
-	firstCol[i] = parseFloat(txt_lines[i].split(",")[0]);
-	secondCol[i] = parseFloat(txt_lines[i].split(",")[2]);
-	thirdCol[i] = parseFloat(txt_lines[i].split(",")[1]);
-	
-	if (i >= 1) {
-	
-	tempData[0] = firstCol[i];
-	tempData[1] = thirdCol[i];
-	graphData[i] = tempData;	//push temp array into final data array
-
-	}
-	else {
-	
-	thirdCol[i] = 0;
-	tempData[0] = firstCol[i];
-	tempData[1] = thirdCol[i];
-	graphData[i] = tempData;	//push temp array into final data array
-	}
-	tempData = [];	//clear temp array
-	
-
-
+	for(var i = 0; i < lineAmount; i++){
+		//Lines are parsed into columns by specific formatting of my data
+		//Probably a more robust, more general way of doing this
+		firstCol[i] = parseFloat(lines[i].split(",")[0]);
+		secondCol[i] = parseFloat(lines[i].split(",")[2]);
+		thirdCol[i] = parseFloat(lines[i].split(",")[1]);
 	}
 	
 
 	var JSONstr = "[";
-	for (var i=0;i<number_of_lines-2;i++) {
+	for (var i=0;i<lineAmount-2;i++) {
 		if (i>0) {
 		JSONstr += ",";
 		}
@@ -55,10 +25,10 @@ parseSpectra = function (txt) {
 		JSONstr += "{";
 		JSONstr += '"x":';
 		JSONstr += firstCol[i];
-		JSONstr += ',"y":';
+		JSONstr += ',"y1":';
 		JSONstr += secondCol[i];
-	/*	JSONstr += ',"y2":';
-		JSONstr += thirdCol[i];*/
+		JSONstr += ',"y2":';
+		JSONstr += thirdCol[i];
 		JSONstr += "}";
 	}
 	JSONstr += "]";
@@ -70,14 +40,14 @@ parseSpectra = function (txt) {
 	}   
 
 
-d3Plot_JSON = function(JSONstr) { 
+d3Plot_JSON = function(JSONstr){ 
 
-margin = {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 45
-};
+	margin = {
+		top: 20,
+		right: 20,
+		bottom: 20,
+		left: 45
+	};
 
 	data = JSON.parse(JSONstr);
 	
@@ -92,25 +62,39 @@ margin = {
 	}))
 		.range([0, width]);
 
-	var y = d3.scale.linear()
+	var y1 = d3.scale.linear()
 		.domain(d3.extent(data, function (d) {
-		return d.y;
+		return d.y1;
+	}))
+		.range([height, 0]);
+		
+	var y2 = d3.scale.linear()
+		.domain(d3.extent(data, function (d) {
+		return d.y2;
 	}))
 		.range([height, 0]);
 
 	//Describe line
-	var line = d3.svg.line()
+	var line1 = d3.svg.line()
 		.x(function (d) {
 		return x(d.x);
 	})
 		.y(function (d) {
-		return y(d.y);
+		return y1(d.y1);
+	});
+	
+	var line2 = d3.svg.line()
+		.x(function (d) {
+		return x(d.x);
+	})
+		.y(function (d) {
+		return y2(d.y2);
 	});
 
 	//Zoom!
 	var zoom = d3.behavior.zoom()
 		.x(x)
-		.y(y)
+		.y(y1)
 		.scaleExtent([0.9,10])
 		.on("zoom", zoomed);
 
@@ -131,10 +115,17 @@ margin = {
 			.ticks(16);
 	};
 
-	var make_y_axis = function () {
+	var make_y_axis_left = function () {
 		return d3.svg.axis()
-			.scale(y)
+			.scale(y1)
 			.orient("left")
+			.ticks(16);
+	};
+	
+	var make_y_axis_right = function () {
+		return d3.svg.axis()
+			.scale(y1)
+			.orient("right")
 			.ticks(16);
 	};
 
@@ -148,16 +139,28 @@ margin = {
 		.attr("transform", "translate(0, " + height + ")")
 		.call(xAxis);
 
-	var yAxis = d3.svg.axis()
-		.scale(y)
+	var yAxisLeft = d3.svg.axis()
+		.scale(y1)
 		.orient("left")
+		.ticks(5);
+		
+	var yAxisRight = d3.svg.axis()
+		.scale(y1)
+		.orient("right")
 		.ticks(5);
 		
 	//Put axes on chart
 
 	svg.append("g")
-		.attr("class", "y axis")
-		.call(yAxis);
+		.attr("class", "y1 axis")
+		.style("fill", "blue")
+		.call(yAxisLeft);
+	
+	svg.append("g")             
+		.attr("class", "y1 axis")    
+		.attr("transform", "translate(" + width + " ,0)")   
+		.style("fill", "red")       
+		.call(yAxisRight);
 
 	svg.append("g")
 		.attr("class", "x grid")
@@ -167,8 +170,14 @@ margin = {
 		.tickFormat(""));
 
 	svg.append("g")
-		.attr("class", "y grid")
-		.call(make_y_axis()
+		.attr("class", "y1 grid")
+		.call(make_y_axis_left()
+		.tickSize(-width, 0, 0)
+		.tickFormat(""));
+		
+	svg.append("g")
+		.attr("class", "y1 grid")
+		.call(make_y_axis_right()
 		.tickSize(-width, 0, 0)
 		.tickFormat(""));
 		
@@ -179,7 +188,7 @@ margin = {
 		.attr("id", "clip")
 		.append("svg:rect")
 		.attr("x", 0)
-		.attr("y", 0)
+		.attr("y1", 0)
 		.attr("width", width)
 		.attr("height", height);
 
@@ -189,24 +198,29 @@ margin = {
 	chartBody.append("svg:path")
 		.datum(data)
 		.attr("class", "line")
-		.attr("d", line);
+		.attr("d", line1)
+		
+//	line2.style("fill", "red")
+	
+	chartBody.append("svg:path")
+		.datum(data)
+		.attr("class", "line")
+		.attr("d", line2);
 
 	//Function for how to behave when zooming in
 	function zoomed() {
 		svg.select(".x.axis").call(xAxis);
-		svg.select(".y.axis").call(yAxis);
+		svg.select(".y1.axis").call(yAxisLeft);
 		svg.select(".x.grid")
 			.call(make_x_axis()
 			.tickSize(-height, 0, 0)
 			.tickFormat(""));
-		svg.select(".y.grid")
-			.call(make_y_axis()
+		svg.select(".y1.grid")
+			.call(make_y_axis_left()
 			.tickSize(-width, 0, 0)
 			.tickFormat(""));
-		svg.select(".line")
-			.attr("class", "line")
+		svg.select(".line1")
+			.attr("class", "line1")
 			.attr("d", line);
 	}
-
-
 }
