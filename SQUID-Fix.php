@@ -8,9 +8,12 @@
   The good people of the internet
   -->
     <title>SQUID-Fix</title>
+	<script src="http://code.jquery.com/jquery.js"></script> 
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="js/plot.js" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-	
+	<link rel="stylesheet" type="text/css" href="css/plot.css">
 	<?php
 		if(file_exists("upload/saveDetails.txt")){
 			//Refresh was due to cancellation - don't delete files
@@ -42,8 +45,7 @@
 				unlink("upload/config.txt");
 			}
 		}
-	?>
-	
+	?>	
   </head>  
   <body>  
     <div class="container">
@@ -67,7 +69,7 @@
 				<form class="form-horizontal">
 					<!--Pascal Correction-->
 					<div class="control-group">
-						<label class="control-label" for="eicoPref">Approximate Pascal Correction:</label>
+						<label class="control-label" for="eicoPref">Pascal Correction:</label>
 						<div class = "controls">
 							<select class = "span2" id = "pascalSelect"  onchange =
 																				'var selected = options[selectedIndex].index;	
@@ -99,7 +101,7 @@
 								?>
 							</select>
 							<div class = "input-append">
-								<input class = "input-mini" onkeypress="return isNumberKey(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
+								<input class = "input-mini" onkeypress="return isNumberKeyPascal(event)" type = "text" id = "pascalField" placeholder="Value" value = "<?php
 																															if(file_exists("upload/saveDetails.txt")){
 																																$fr = fopen("upload/saveDetails.txt", "r");
 																																for($i = 0; $i < 5; $i++){
@@ -212,17 +214,18 @@
 			<!--Raw Data Drop Upload Box-->
 			<div class="span4">
 				<h4>Raw Data:</h4>
-					<input type = "text" id = "rawName" readonly value =    "<?php 
-																				if(file_exists("upload/rawName.txt") && file_exists("upload/rawData.txt")){
-																					$fr = fopen("upload/rawName.txt", "r");
-																					$name = fgets($fr);
-																					fclose($fr);
-																					echo $name;
-																				} 
-																			?>"><!--Fill with name of raw data file-->					
-					<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
-						<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelRaw"/></p>
-					</form>
+				<input type = "text" id = "rawName" readonly value =    "<?php 
+																			if(file_exists("upload/rawName.txt") && file_exists("upload/rawData.txt")){
+																				$fr = fopen("upload/rawName.txt", "r");
+																				$name = fgets($fr);
+																				fclose($fr);
+																				echo $name;
+																			} 
+																		?>"><!--Fill with name of raw data file-->
+			
+				<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
+					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelRaw"/></p>
+				</form>
 				<article>
 					<div id="holder1">
 					</div>
@@ -286,6 +289,9 @@
 			</form>
 		</div>
 		<!--Buttons-->
+		<div class = "row">
+			<div id="chart"></div>
+		</div>
 	
 		<!--CSS Styling for drag/drop boxes-->
 		<style>
@@ -306,10 +312,47 @@
 		</style>
 		
 		<script>
+			function fileExists(url) {	//Check to see if a file has been uploaded
+				if(url){
+					var req = new XMLHttpRequest();
+					req.open('GET', url, false);
+					req.send();
+					return req.status==200;
+				} else {
+					return false;
+				}
+			}
+		
+			if(fileExists("upload/graphData.txt")){
+				d3.text("upload/graphData.txt",f_spc);
+				function f_spc(text) {
+					parseSpectra(text);
+				}
+			}
+		</script>
+		
+		<script>
 			document.getElementById("downloadButton").style.visibility = "hidden";
-			document.getElementById("cancelRaw").style.visibility = "hidden";
-			document.getElementById("cancelCap").style.visibility = "hidden";
-			document.getElementById("cancelEico").style.visibility = "hidden";
+			<?php
+				if(file_exists("upload/rawData.txt")){
+					echo 'document.getElementById("cancelRaw").style.visibility = "visible";';
+				}
+				else{
+					echo 'document.getElementById("cancelRaw").style.visibility = "hidden";';
+				}
+				if(file_exists("upload/gelcapData.txt")){
+					echo 'document.getElementById("cancelCap").style.visibility = "visible";';
+				}
+				else{
+					echo 'document.getElementById("cancelCap").style.visibility = "hidden";';
+				}
+				if(file_exists("upload/eicoData.txt")){
+					echo 'document.getElementById("cancelEico").style.visibility = "visible";';
+				}
+				else{
+					echo 'document.getElementById("cancelEico").style.visibility = "hidden";';
+				}
+			?>
 			<?php	//Sets pascal value visibility state after cancellation refresh
 				if(file_exists("upload/saveDetails.txt")){
 					$fr = fopen("upload/saveDetails.txt", "r");
@@ -338,6 +381,14 @@
 		{
 			var charCode = (evt.which) ? evt.which : event.keyCode
 			if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46){	//If key isn't a number or .
+				return false;	//Don't allow key true
+			}
+			return true;	//Key can be typed
+		}
+		function isNumberKeyPascal(evt)	//Checks that entered keys are acceptable on each key press - validation only numbers and . and -
+		{
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46 && charCode != 45){	//If key isn't a number or . or -
 				return false;	//Don't allow key true
 			}
 			return true;	//Key can be typed
@@ -496,22 +547,13 @@
 				}
 			}
 			
-			function fileExists(url) {	//Check to see if a file has been uploaded
-				if(url){
-					var req = new XMLHttpRequest();
-					req.open('GET', url, false);
-					req.send();
-					return req.status==200;
-				} else {
-					return false;
+			<?php
+				if(file_exists("upload/rawData.txt")){ //If the raw data file is in the upload folder after refreshing, display the tick
+					echo 	'theImage = new Image(250,250);
+							theImage.src = "images/tick.jpg";
+							holder1.appendChild(theImage);';
 				}
-			}
-			
-			if(fileExists("upload/rawData.txt") == true){ //If the raw data file is in the upload folder, after refreshing, display the tick
-				theImage = new Image(250,250);
-				theImage.src = "images/tick.jpg";
-				holder1.appendChild(theImage);
-			}
+			?>
 
 			if (tests.dnd) { 
 			  holder1.ondragover = function () { this.className = 'hover'; return false; };	//Change the colour of the box on dragover.
@@ -573,11 +615,13 @@
 			  }
 			}
 			
-			if(fileExists("upload/gelcapData.txt") == true){
-				theImage = new Image(250,250);
-				theImage.src = "images/tick.jpg";
-				holder2.appendChild(theImage);
-			}
+			<?php
+				if(file_exists("upload/gelcapData.txt")){ //If the gel cap data file is in the upload folder after refreshing, display the tick
+					echo 	'theImage = new Image(250,250);
+							theImage.src = "images/tick.jpg";
+							holder2.appendChild(theImage);';
+				}
+			?>
 
 			function readfiles2(files) {
 				debugger;
@@ -649,11 +693,13 @@
 			  }
 			});
 			
-			if(fileExists("upload/eicoData.txt") == true){
-				theImage = new Image(250,250);
-				theImage.src = "images/tick.jpg";
-				holder3.appendChild(theImage);
-			}
+			<?php
+				if(file_exists("upload/eicoData.txt")){ //If the eicosane data file is in the upload folder after refreshing, display the tick
+					echo 	'theImage = new Image(250,250);
+							theImage.src = "images/tick.jpg";
+							holder3.appendChild(theImage);';
+				}
+			?>
 			
 			function previewfile3(file) {
 				console.log("holder3");
@@ -754,7 +800,7 @@
 	
 	-->
 
-    <script src="http://code.jquery.com/jquery.js"></script>  
-    <script src="bootstrap/js/bootstrap.min.js"></script>  
+     
+    <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>  
 </html>

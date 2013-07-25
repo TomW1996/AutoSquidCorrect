@@ -1,0 +1,23 @@
+<head>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="js/plot.js" charset="utf-8"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="css/plot.css">
+
+</head>
+
+<div id="chart"></div>
+
+<script>
+
+//d3Plot_JSON("epr_data.json");
+
+	d3.text("upload/graphData.txt",f_spc);
+	function f_spc(text) {
+		parseSpectra(text);
+	}
+
+</script>

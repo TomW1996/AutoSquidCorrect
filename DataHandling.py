@@ -139,4 +139,24 @@ def setUpTXT(dataX, dataY, dataZ):
         fileWrite.write(i + "\n")
     fileWrite.close()
         
-    
+def getField():
+    fileRead = open("upload/rawData.txt", "r")
+    theLine = fileRead.readline()
+    foundData = False
+    while foundData == False:
+        if "[Data]" in theLine:
+            foundData = True
+        else:
+            theLine = fileRead.readline()
+    theLine = fileRead.readline()
+    headings = theLine.split(",")
+    fCount = 0
+    for str in headings:
+        if str.lower().startswith("field"):
+            break
+        else:
+            fCount = fCount + 1
+    theLine = fileRead.readline()
+    lineData = theLine.split(",")
+    field = lineData[fCount]
+    return field

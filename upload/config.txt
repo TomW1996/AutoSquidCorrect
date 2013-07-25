@@ -3,6 +3,6 @@ Gel Cap Data File: upload/gelcapData.txt
 Eicosane Data File: null
 Eicosane - Sample Mass: 0
 Eicosane - Blank Mass: 0
-Molecular Weight : 2
-Sample Mass: 1
+Molecular Weight : 23
+Sample Mass: 12
 Pascal Correction Value: null
