@@ -44,6 +44,9 @@
 			if(file_exists("upload/config.txt")){
 				unlink("upload/config.txt");
 			}
+			if(file_exists("upload/graphData.txt")){
+				unlink("upload/graphData.txt");
+			}
 		}
 	?>	
   </head>  
@@ -223,7 +226,7 @@
 																			} 
 																		?>"><!--Fill with name of raw data file-->
 			
-				<form action = "cancelRaw.php" method = "post" onclick = "retainData();">
+				<form action = "cancelRaw.php" method = "post" onclick = "retainData(0);">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelRaw"/></p>
 				</form>
 				<article>
@@ -247,7 +250,7 @@
 																				echo $name;
 																			} 
 																		?>"><!--Fill with name of gel cap data file-->	
-				<form action = "cancelCap.php" method = "post" onclick = "retainData();">
+				<form action = "cancelCap.php" method = "post" onclick = "retainData(0);">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelCap"/></p>
 				</form>
 				<article>
@@ -268,7 +271,7 @@
 																				echo $name;
 																			} 
 																		?>"><!--Fill with name of eicosane data file-->	
-				<form action = "cancelEico.php" method = "post" onclick = "retainData();">
+				<form action = "cancelEico.php" method = "post" onclick = "retainData(0);">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelEico"/></p>
 				</form>
 				<article>
@@ -283,9 +286,12 @@
 		<!--Buttons-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = 'getData();'/></center></p><!--Runs correction script when button clicked-->
-			<form action="Download.php" method="post" name="downloadform"/>
+			<form action="Download.php" method="post" name="downloadform" onclick = "retainData(2);"/>
 				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/><!--Runs download script when button clicked-->
 				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download"></center></p>
+			</form>
+			<form action = "refresh.php" method = "post" onclick = "retainData(1);">
+				<p><center><input id = "graphButton" type="submit" class = "btn btn-large btn-primary" value="Draw Graph"></center></p>
 			</form>
 		</div>
 		<!--Buttons-->
@@ -312,27 +318,17 @@
 		</style>
 		
 		<script>
-			function fileExists(url) {	//Check to see if a file has been uploaded
-				if(url){
-					var req = new XMLHttpRequest();
-					req.open('GET', url, false);
-					req.send();
-					return req.status==200;
-				} else {
-					return false;
+			<?php
+				if(file_exists("upload/graphData.txt")){
+					echo 'd3.text("upload/graphData.txt",f_spc);
+						 function f_spc(text) {
+							parseSpectra(text);
+						 }';
 				}
-			}
-		
-			if(fileExists("upload/graphData.txt")){
-				d3.text("upload/graphData.txt",f_spc);
-				function f_spc(text) {
-					parseSpectra(text);
-				}
-			}
+			?>
 		</script>
 		
 		<script>
-			document.getElementById("downloadButton").style.visibility = "hidden";
 			<?php
 				if(file_exists("upload/rawData.txt")){
 					echo 'document.getElementById("cancelRaw").style.visibility = "visible";';
@@ -372,6 +368,14 @@
 				else{
 					echo 'document.getElementById("pascalField").style.visibility = "hidden";';
 					echo 'document.getElementById("pascalMagnitude").style.visibility = "hidden";';
+				}
+			?>
+			<?php
+				if(file_exists("upload/saveDetails.txt")){
+				}
+				else{
+					echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
+					echo 'document.getElementById("graphButton").style.visibility = "hidden";';
 				}
 			?>
 		</script>
@@ -415,6 +419,7 @@
 									if(confirm("No eicosane was used")){ //Check they don't need eicosane
 										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
 										document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
+										document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
 									}
 								}
 								else{
@@ -440,7 +445,8 @@
 								if(parseFloat(blankEico)/1 == blankEico){
 									if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
 										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
-										document.getElementById("downloadButton").style.visibility = "visible";			
+										document.getElementById("downloadButton").style.visibility = "visible";
+										document.getElementById("graphButton").style.visibility = "visible";												
 									}
 									else{
 										alert("Pascal Correction Value was entered incorrectly");
@@ -464,7 +470,7 @@
 				}
 			}
 			
-			function retainData(){	//Get field data and visibility states of dropdown & download button
+			function retainData(sentFrom){	//Get field data and visibility states of dropdown & download button
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
 				var sampleEico = $('#sampleEico').val();
@@ -472,15 +478,23 @@
 				var pascalValue = $('#pascalField').val();
 				var applyPascal = $('#pascalSelect').val();
 				var downloadHide = document.getElementById("downloadButton").style.visibility;
-				var hidden = 0;
-				if(downloadHide == "hidden"){
-					hidden = 1;
-				}
-				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postHidden: hidden}, function(data){}); //Send information to separate PHP script
+				var graphHide = document.getElementById("graphButton").style.visibility;
+				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postDownloadHide: downloadHide, postGraphHide: graphHide, postSentFrom: sentFrom}, function(data){}); //Send information to separate PHP script
 			}
 		</script>
 			
 			<script>
+			function fileExists(url) {	//Check to see if a file has been uploaded
+				if(url){
+					var req = new XMLHttpRequest();
+					req.open('GET', url, false);
+					req.send();
+					return req.status==200;
+				} else {
+					return false;
+				}
+			}
+			
 			var holder1 = document.getElementById('holder1'), //Get the raw data drag/drop box
 				tests = {
 				  filereader: typeof FileReader != 'undefined',
@@ -769,9 +783,14 @@
 			</script>
 			
 			<?php
-				if(file_exists("upload/saveDetails.txt")){	//Check that file exists
-					unlink("upload/saveDetails.txt");	//Delete file - file used to retain values of fields stored before cancellation refresh, 
-				}										//so needs to be deleted straight away to prevent values staying permanently
+				while(1>0){										//Keep looping until file has been deleted - avoid errors
+					if(file_exists("upload/saveDetails.txt")){	//Check that file exists
+						unlink("upload/saveDetails.txt");		//Delete file - file used to retain values of fields stored before cancellation refresh, 
+					}											//so needs to be deleted straight away to prevent values staying permanently
+					else{
+						break;
+					}
+				}
 			?>
 
       <hr>

@@ -5,7 +5,9 @@
 	$blankEico = $_POST['postBlankEico'];
 	$pascalValue = $_POST['postPascalValue'];
 	$applyPascal = $_POST['postApplyPascal'];
-	$downloadHide = $_POST['postHidden'];
+	$downloadHide = $_POST['postDownloadHide'];
+	$graphHide = $_POST['postGraphHide'];
+	$sentFrom = $_POST['postSentFrom'];
 	
 	$fw = fopen('upload/saveDetails.txt', 'w');	//Create new file to write to
 	fwrite($fw, $sampleMass."\n");	//Write data to file, each on a new line
@@ -13,7 +15,6 @@
 	fwrite($fw, $sampleEico."\n");
 	fwrite($fw, $blankEico."\n");
 	fwrite($fw, $pascalValue."\n");
-	fwrite($fw, $applyPascal."\n");
-	fwrite($fw, $downloadHide);
+	fwrite($fw, $applyPascal);
 	fclose($fw);	//Close file writer
 ?>

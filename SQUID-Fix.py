@@ -67,26 +67,26 @@ if compoundEico != 0 and testEico != 0:
     if pascalValue == "null":
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
-            chiData.append((correctedLongMoment/field)/((compoundWeight/1000)/molecularWeight))
+            chiData.append((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
     else:
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((compoundEico/testEico)*(float(bLongMoment[count])-float(eLongMoment[count])))-float(eLongMoment[count])))
-            chiData.append(((correctedLongMoment/field)/((compoundWeight/1000)/molecularWeight))-pascalValue)
+            chiData.append(((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))-pascalValue)
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
 else:
     if pascalValue == "null":
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((float(bLongMoment[count])))))
-            chiData.append((correctedLongMoment/field)/((compoundWeight/1000)/molecularWeight))
+            chiData.append((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
     else:
         for i in rLongMoment:
             correctedLongMoment.append(float(i) - (((float(bLongMoment[count])))))
-            chiData.append(((correctedLongMoment/field)/((compoundWeight/1000)/molecularWeight))-pascalValue)
+            chiData.append(((correctedLongMoment[count]/field)/((compoundWeight/1000)/molecularWeight))-pascalValue)
             chiTData.append(float(chiData[count]) * float(rTemperature[count]))
             count = count + 1
 
