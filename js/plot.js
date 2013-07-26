@@ -17,8 +17,8 @@ parseSpectra = function (txt) {
 	
 
 	var JSONstr = "[";
-	for (var i=0;i<lineAmount-2;i++) {
-		if (i>0) {
+	for (var i = 0; i < lineAmount - 2; i++) {
+		if (i > 0) {
 		JSONstr += ",";
 		}
 		JSONstr += '\n';
@@ -46,7 +46,7 @@ d3Plot_JSON = function(JSONstr){
 		top: 20,
 		right: 20,
 		bottom: 20,
-		left: 45
+		left: 65
 	};
 
 	data = JSON.parse(JSONstr);
@@ -91,19 +91,12 @@ d3Plot_JSON = function(JSONstr){
 		return y2(d.y2);
 	});
 
-	//Zoom!
-	var zoom = d3.behavior.zoom()
-		.x(x)
-		.y(y1)
-		.scaleExtent([0.9,10])
-		.on("zoom", zoomed);
 
 	//Init svg object
 	svg = d3.select('#chart')
 		.append("svg:svg")
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height + margin.top + margin.bottom)
-		.call(zoom)
+		.attr('width', width + margin.left + margin.right + 100)
+		.attr('height', height + margin.top + margin.bottom + 100)
 		.append("svg:g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -114,7 +107,7 @@ d3Plot_JSON = function(JSONstr){
 			.orient("bottom")
 			.ticks(16);
 	};
-
+	
 	var make_y_axis_left = function () {
 		return d3.svg.axis()
 			.scale(y1)
@@ -124,7 +117,7 @@ d3Plot_JSON = function(JSONstr){
 	
 	var make_y_axis_right = function () {
 		return d3.svg.axis()
-			.scale(y1)
+			.scale(y2)
 			.orient("right")
 			.ticks(16);
 	};
@@ -133,34 +126,56 @@ d3Plot_JSON = function(JSONstr){
 		.scale(x)
 		.orient("bottom")
 		.ticks(8);
-
+	
 	svg.append("svg:g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0, " + height + ")")
 		.call(xAxis);
+		
+	svg.append("text")      // text label for the x axis
+        .attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom + 20) + ")")
+        .style("text-anchor", "middle")
+		.style("font-family", "georgia")
+        .text("Temperature (K)");
 
 	var yAxisLeft = d3.svg.axis()
-		.scale(y1)
+		.scale(y2)
 		.orient("left")
-		.ticks(5);
+		.ticks(6);
 		
 	var yAxisRight = d3.svg.axis()
 		.scale(y1)
 		.orient("right")
-		.ticks(5);
+		.ticks(6);
 		
 	//Put axes on chart
 
 	svg.append("g")
-		.attr("class", "y1 axis")
-		.style("fill", "blue")
+		.attr("class", "y axis")
+		.style("fill", "black")
 		.call(yAxisLeft);
+		
+	svg.append("text") 
+        .attr("x", (-height/2))
+        .attr("y", -50)
+        .style("text-anchor", "middle")
+		.attr("transform", "rotate(-90)")
+		.style("font-family", "georgia")
+		.text("χT (cm³ mol" + "\u207B" + "¹ K)");
 	
 	svg.append("g")             
-		.attr("class", "y1 axis")    
+		.attr("class", "y axis")    
 		.attr("transform", "translate(" + width + " ,0)")   
-		.style("fill", "red")       
+		.style("fill", "red")	
 		.call(yAxisRight);
+	
+	svg.append("text") 
+        .attr("x", (height/2))
+        .attr("y", -50 - width)
+        .style("text-anchor", "middle")
+		.attr("transform", "rotate(90)")
+		.style("font-family", "georgia")
+		.text("χ (cm³ mol" + "\u207B" + "¹)");
 
 	svg.append("g")
 		.attr("class", "x grid")
@@ -170,57 +185,27 @@ d3Plot_JSON = function(JSONstr){
 		.tickFormat(""));
 
 	svg.append("g")
-		.attr("class", "y1 grid")
+		.attr("class", "y grid")
 		.call(make_y_axis_left()
 		.tickSize(-width, 0, 0)
 		.tickFormat(""));
-		
-	svg.append("g")
-		.attr("class", "y1 grid")
-		.call(make_y_axis_right()
-		.tickSize(-width, 0, 0)
-		.tickFormat(""));
-		
 	
-	//Render stuff when zoomed in
-
-	var clip = svg.append("svg:clipPath")
-		.attr("id", "clip")
-		.append("svg:rect")
-		.attr("x", 0)
-		.attr("y1", 0)
-		.attr("width", width)
-		.attr("height", height);
-
+	//Render lines
+	
 	var chartBody = svg.append("g")
 		.attr("clip-path", "url(#clip)");
 
 	chartBody.append("svg:path")
 		.datum(data)
 		.attr("class", "line")
+		.style("stroke", "red")
 		.attr("d", line1)
-		
-//	line2.style("fill", "red")
 	
 	chartBody.append("svg:path")
 		.datum(data)
 		.attr("class", "line")
+		.style("stroke", "black")
 		.attr("d", line2);
 
-	//Function for how to behave when zooming in
-	function zoomed() {
-		svg.select(".x.axis").call(xAxis);
-		svg.select(".y1.axis").call(yAxisLeft);
-		svg.select(".x.grid")
-			.call(make_x_axis()
-			.tickSize(-height, 0, 0)
-			.tickFormat(""));
-		svg.select(".y1.grid")
-			.call(make_y_axis_left()
-			.tickSize(-width, 0, 0)
-			.tickFormat(""));
-		svg.select(".line1")
-			.attr("class", "line1")
-			.attr("d", line);
-	}
+	
 }

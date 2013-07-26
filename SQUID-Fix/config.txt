@@ -1,8 +1,8 @@
-Raw Data File: Data_Files/JPSW-RM-5_1kGChiT.rso.dat
-Gel Cap Data File: Data_Files/gelcap.txt
-Eicosane Data File (Leave as 'Data_Files/' for no Eicosane): Data_Files/eicosane.txt
-Eicosane - Sample Mass (Set as '0' for no Eicosane): 10
-Eicosane - Blank Mass (Set as '0' for no Eicosane): 11.4
-Molecular Weight: 12.2
-Sample Mass: 7.45
-Pascal Correction Value (Set as '0' to not apply): 0.4
+Raw Data File: Data_Files/
+Gel Cap Data File: Data_Files/
+Eicosane Data File (Leave as 'Data_Files/' for no Eicosane): Data_Files/
+Eicosane - Sample Mass (Set as '0' for no Eicosane): 
+Eicosane - Blank Mass (Set as '0' for no Eicosane): 
+Molecular Weight: 
+Sample Mass: 
+Pascal Correction Value (Set as '0' to not apply): 
