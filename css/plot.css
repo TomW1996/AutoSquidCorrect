@@ -17,9 +17,13 @@
 }
 
 .axis text {
-	font-family: sans-serif;
+	font-family: georgia
 	font-size: 11px;
 
+}
+
+.axislabel{
+	font-size: 40px;
 }
 
 .chart {

@@ -10,7 +10,7 @@
     <title>SQUID-Fix</title>
 	<script src="http://code.jquery.com/jquery.js"></script> 
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	<script src="js/plot.js" charset="utf-8"></script>
+	<script src="js/plotnozoom.js" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" type="text/css" href="css/plot.css">
