@@ -286,14 +286,18 @@
 		<!--Buttons-->
 		<div class = "row">
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = 'getData();'/></center></p><!--Runs correction script when button clicked-->
-			<form action="Download.php" method="post" name="downloadform" onclick = "retainData(2);"/>
-				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/><!--Runs download script when button clicked-->
-				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download"></center></p>
-			</form>
+		</div>	
+		<div class = "row">
 			<form action = "refresh.php" method = "post" onclick = "retainData(1);">
-				<p><center><input id = "graphButton" type="submit" class = "btn btn-large btn-primary" value="Draw Graph"></center></p>
+				<p><center><input id = "graphButton" type="submit" class = "btn btn-large btn-primary" value="Plot Data"></center></p>
 			</form>
+			<form action="Download.php" method="post" name="downloadform" onclick = "retainData(2);"/>
+				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/>
+				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download Data"></center></p><!--Runs download script when button clicked--> 
+				<!--Mort insisted on the 'symmetry' of 3 "... Data" buttons-->
+			</form>			
 		</div>
+		
 		<!--Buttons-->
 		<div class = "row">
 			<div id="chart"></div>
@@ -319,7 +323,7 @@
 		
 		<script>
 			<?php
-				if(file_exists("upload/graphData.txt")){
+				if(file_exists("upload/graphData.txt")){		//Runs the graphing data script, provided the graphData.txt file exists
 					echo 'd3.text("upload/graphData.txt",f_spc);
 						 function f_spc(text) {
 							parseSpectra(text);
