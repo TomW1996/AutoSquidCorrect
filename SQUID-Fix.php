@@ -57,8 +57,8 @@
 			<div class = "row">
 				<div class = "span7">
 					<h1>SQUID-Fix</h1>
-					<p>SQUID-Fix is a tool designed for chemistry students. Using real SQUID data, it will correct your raw data 
-					and produce graphs as well as a downloadable file with all the calculated results. To begin, please enter the appropriate data
+					<p>SQUID-Fix is a tool designed for chemistry students. It will correct your raw SQUID data
+					and then use that to calculate Chi and ChiT. To begin, enter the appropriate data
 					and drag your data files into the correct boxes. If you didn't use Eicosane, leave all related fields blank.</p>
 				</div>
 					<img src = "images/pro_logo.png" align = "right" width = 280>
@@ -296,12 +296,114 @@
 				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download Data"></center></p><!--Runs download script when button clicked--> 
 				<!--Mort insisted on the 'symmetry' of 3 "... Data" buttons-->
 			</form>			
-		</div>
-		
+		</div>	
 		<!--Buttons-->
+		<!--Graph-->
 		<div class = "row">
 			<div id="chart"></div>
 		</div>
+		<!--Graph-->
+		<!-- Modals -->
+		<!--Fill all fields-->
+		<div id="fillModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Error</h3>
+			</div>
+			<div class="modal-body">
+				<p>Not all fields have been filled</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!--Fill all fields-->
+		<!--Pascal-->
+		<div id="pascalModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Error</h3>
+			</div>
+			<div class="modal-body">
+				<p>Pascal Correction Value was entered incorrectly</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!--Pascal-->
+		<!--Eicosane - Blank-->
+		<div id="blankEicoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Error</h3>
+			</div>
+			<div class="modal-body">
+				<p>Eicosane Blank Mass was entered incorrectly</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!--Eicosane - Blank-->
+		<!--Eicosane - Sample-->
+		<div id="sampleEicoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Error</h3>
+			</div>
+			<div class="modal-body">
+				<p>Eicosane Sample Mass was entered incorrectly</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!--Eicosane - Sample-->
+		<!--Molecular Weight-->
+		<div id="molWeightModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Error</h3>
+			</div>
+			<div class="modal-body">
+				<p>Molecular Weight was entered incorrectly</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!--Molecular Weight-->
+		<!--Sample Mass-->
+		<div id="sampleMassModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Error</h3>
+			</div>
+			<div class="modal-body">
+				<p>Sample Mass was entered incorrectly</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!--Sample Mass-->
+		<!--No Eicosane?-->
+		<div id="confirmModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">No Eicosane Used</h3>
+			</div>
+			<div class="modal-body">
+				<p>Continue without Eicosane data?</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" onclick = "modalResult();" data-dismiss="modal" aria-hidden="true">Yes</button>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+			</div>
+		</div>
+		<!--No Eicosane?-->
+		<!-- Modals -->
 	
 		<!--CSS Styling for drag/drop boxes-->
 		<style>
@@ -404,6 +506,22 @@
 		</script>
 		
 		<script>
+			function modalResult(){
+				var sampleMass = $('#sampleMass').val();
+				var molWeight = $('#molWeight').val();
+				var sampleEico = $('#sampleEico').val();
+				var blankEico = $('#blankEico').val();
+				var applyCorrection = $('#pascalSelect').val();
+				var pascalValue = $('#pascalField').val();
+				var rawData = $('#rawName').val();
+				var gelData = $('#gelName').val();
+				var eicoData = $('#eicoName').val()
+				console.log("Hi");
+				$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
+				document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
+				document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
+			}
+		
 			function getData(){	//Get values from text fields to use in correction script
 				var sampleMass = $('#sampleMass').val();
 				var molWeight = $('#molWeight').val();
@@ -420,26 +538,28 @@
 						if(parseFloat(sampleMass)/1 == sampleMass){
 							if(parseFloat(molWeight)/1 == molWeight){
 								if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
-									if(confirm("No eicosane was used")){ //Check they don't need eicosane
-										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
-										document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
-										document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
-									}
+								//	if(confirm("No eicosane was used")){ //Check they don't need eicosane
+										$('#confirmModal').modal();
+									
+									//	$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
+									//	document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
+									//	document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
+									
 								}
 								else{
-									alert("Pascal Correction Value was entered incorrectly");
+									$('#pascalModal').modal();
 								}
 							}
 							else{
-								alert("Molecular Weight was entered incorrectly");
+								$('#molWeightModal').modal();
 							}
 						}
 						else{
-							alert("Sample Mass was entered incorrectly");
+							$('#sampleMassModal').modal();
 						}
 					}
 					else{
-						alert("Please fill all fields"); //Remind them to fill all fields
+						$('#fillModal').modal();	//Remind them to fill all fields
 					}
 				} 
 				else{	//If all fields are filled
@@ -453,23 +573,23 @@
 										document.getElementById("graphButton").style.visibility = "visible";												
 									}
 									else{
-										alert("Pascal Correction Value was entered incorrectly");
+										$('#pascalModal').modal();
 									}
 								}
 								else{
-									alert("Eicosane Blank Mass was entered incorrectly");
+									$('#blankEicoModal').modal();
 								}
 							}
 							else{
-								alert("Eicosane Sample Mass was entered incorrectly");
+								$('#sampleEicoModal').modal();
 							}
 						}
 						else{
-							alert("Molecular Weight was entered incorrectly");
+							$('#molWeightModal').modal();
 						}
 					}
 					else{
-						alert("Sample Mass was entered incorrectly");
+						$('#sampleMassModal').modal();
 					}
 				}
 			}
@@ -805,8 +925,8 @@
 
     </div> <!-- /container -->
 
-<!--
-	
+
+<!--	
     <script src="../assets/js/jquery.js"></script>
     <script src="../assets/js/bootstrap-transition.js"></script>
     <script src="../assets/js/bootstrap-alert.js"></script>
@@ -820,8 +940,8 @@
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-carousel.js"></script>
     <script src="../assets/js/bootstrap-typeahead.js"></script>
-	
-	-->
+-->	
+
 
      
     <script src="bootstrap/js/bootstrap.min.js"></script>
