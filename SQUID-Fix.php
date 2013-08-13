@@ -58,7 +58,7 @@
 				<div class = "span7">
 					<h1>SQUID-Fix</h1>
 					<p>SQUID-Fix is a tool designed for chemistry students. It will correct your raw SQUID data
-					and then use that to calculate Chi and ChiT. To begin, enter the appropriate data
+					and then use that to calculate &chi; and &chi;T. To begin, enter the appropriate data
 					and drag your data files into the correct boxes. If you didn't use Eicosane, leave all related fields blank.</p>
 				</div>
 					<img src = "images/pro_logo.png" align = "right" width = 280>
