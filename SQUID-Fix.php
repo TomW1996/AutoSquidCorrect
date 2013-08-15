@@ -294,7 +294,7 @@
 			<form action="Download.php" method="post" name="downloadform" onclick = "retainData(2);"/>
 				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/>
 				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download Data"></center></p><!--Runs download script when button clicked--> 
-				<!--Mort insisted on the 'symmetry' of 3 "... Data" buttons-->
+				<!--Mort insisted on the 'symmetry' of three "... Data" buttons-->
 			</form>			
 		</div>	
 		<!--Buttons-->
@@ -478,6 +478,19 @@
 			?>
 			<?php
 				if(file_exists("upload/saveDetails.txt")){
+					$fr = fopen("upload/saveDetails.txt", "r");
+					for($i = 0; $i < 6; $i++){
+						$data = fgets($fr);
+					}
+					fclose($fr);
+					if($data == "visible"){
+						echo 'document.getElementById("downloadButton").style.visibility = "visible";';
+						echo 'document.getElementById("graphButton").style.visibility = "visible";';	
+					}
+					else{
+						echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
+						echo 'document.getElementById("graphButton").style.visibility = "hidden";';
+					}
 				}
 				else{
 					echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
@@ -516,7 +529,6 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val()
-				console.log("Hi");
 				$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
 				document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
 				document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
@@ -538,13 +550,7 @@
 						if(parseFloat(sampleMass)/1 == sampleMass){
 							if(parseFloat(molWeight)/1 == molWeight){
 								if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
-								//	if(confirm("No eicosane was used")){ //Check they don't need eicosane
-										$('#confirmModal').modal();
-									
-									//	$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
-									//	document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
-									//	document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
-									
+									$('#confirmModal').modal();									
 								}
 								else{
 									$('#pascalModal').modal();

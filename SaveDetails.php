@@ -15,6 +15,7 @@
 	fwrite($fw, $sampleEico."\n");
 	fwrite($fw, $blankEico."\n");
 	fwrite($fw, $pascalValue."\n");
-	fwrite($fw, $applyPascal);
+	fwrite($fw, $applyPascal."\n");
+	fwrite($fw, $downloadHide);
 	fclose($fw);	//Close file writer
 ?>
