@@ -226,7 +226,7 @@
 																			} 
 																		?>"><!--Fill with name of raw data file-->
 			
-				<form action = "cancelRaw.php" method = "post" onclick = "retainData(0);">
+				<form action = "php/cancelRaw.php" method = "post" onclick = "retainData(0);">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelRaw"/></p>
 				</form>
 				<article>
@@ -250,7 +250,7 @@
 																				echo $name;
 																			} 
 																		?>"><!--Fill with name of gel cap data file-->	
-				<form action = "cancelCap.php" method = "post" onclick = "retainData(0);">
+				<form action = "php/cancelCap.php" method = "post" onclick = "retainData(0);">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelCap"/></p>
 				</form>
 				<article>
@@ -271,7 +271,7 @@
 																				echo $name;
 																			} 
 																		?>"><!--Fill with name of eicosane data file-->	
-				<form action = "cancelEico.php" method = "post" onclick = "retainData(0);">
+				<form action = "php/cancelEico.php" method = "post" onclick = "retainData(0);">
 					<p><input type = "submit" class = "btn btn-mini btn-primary" value = "X" id = "cancelEico"/></p>
 				</form>
 				<article>
@@ -288,10 +288,10 @@
 			<p><center><input type = "button" class = "btn btn-large btn-primary" value = "Correct Data" onclick = 'getData();'/></center></p><!--Runs correction script when button clicked-->
 		</div>	
 		<div class = "row">
-			<form action = "refresh.php" method = "post" onclick = "retainData(1);">
+			<form action = "php/refresh.php" method = "post" onclick = "retainData(1);">
 				<p><center><input id = "graphButton" type="submit" class = "btn btn-large btn-primary" value="Plot Data"></center></p>
 			</form>
-			<form action="Download.php" method="post" name="downloadform" onclick = "retainData(2);"/>
+			<form action="php/download.php" method="post" name="downloadform" onclick = "retainData(2);"/>
 				<input name="download" value="rawData.txt_Corrected.txt" type = "hidden" id = "download"/>
 				<p><center><input id = "downloadButton" type="submit" class = "btn btn-large btn-primary" value="Download Data"></center></p><!--Runs download script when button clicked--> 
 				<!--Mort insisted on the 'symmetry' of three "... Data" buttons-->
@@ -540,7 +540,7 @@
 				var rawData = $('#rawName').val();
 				var gelData = $('#gelName').val();
 				var eicoData = $('#eicoName').val()
-				$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
+				$.post('setUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
 				document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
 				document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
 				document.getElementById("cancelRaw").style.visibility = "hidden";
@@ -588,7 +588,7 @@
 							if(parseFloat(sampleEico)/1 == sampleEico){
 								if(parseFloat(blankEico)/1 == blankEico){
 									if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
-										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
+										$.post('setUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
 										document.getElementById("downloadButton").style.visibility = "visible";
 										document.getElementById("graphButton").style.visibility = "visible";
 										document.getElementById("cancelRaw").style.visibility = "hidden";
@@ -626,7 +626,7 @@
 				var applyPascal = $('#pascalSelect').val();
 				var downloadHide = document.getElementById("downloadButton").style.visibility;
 				var graphHide = document.getElementById("graphButton").style.visibility;
-				$.post('SaveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postDownloadHide: downloadHide, postGraphHide: graphHide, postSentFrom: sentFrom}, function(data){}); //Send information to separate PHP script
+				$.post('php/saveDetails.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postPascalValue: pascalValue, postApplyPascal: applyPascal, postDownloadHide: downloadHide, postGraphHide: graphHide, postSentFrom: sentFrom}, function(data){}); //Send information to separate PHP script
 			}
 		</script>
 			
@@ -692,7 +692,7 @@
 
 				if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
-				  xhr.open('POST', 'rawUpload.php');	//Send the file data to the upload PHP script
+				  xhr.open('POST', 'php/rawUpload.php');	//Send the file data to the upload PHP script
 
 				  if (tests.progress) {
 					xhr.upload.onprogress = function (event) {
@@ -794,7 +794,7 @@
 
 				if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
-				  xhr.open('POST', 'gelcapUpload.php');
+				  xhr.open('POST', 'php/gelcapUpload.php');
 				  xhr.onload = function() {
 					progress.value = progress.innerHTML = 100;
 				  };
@@ -891,7 +891,7 @@
 
 				if (tests.formdata) {
 				  var xhr = new XMLHttpRequest();
-				  xhr.open('POST', 'eicoUpload.php');
+				  xhr.open('POST', 'php/eicoUpload.php');
 				  xhr.onload = function() {
 					progress.value = progress.innerHTML = 100;
 				  };

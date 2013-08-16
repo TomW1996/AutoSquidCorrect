@@ -10,20 +10,20 @@
 		else
 		{
 			
-			if(file_exists("upload/" . $_FILES["file"]["name"]))	//Check if file already exists
+			if(file_exists("../upload/" . $_FILES["file"]["name"]))	//Check if file already exists
 			{
 				print($_FILES["file"]["name"] . " already exists. ");
 			}
 			else	//File does not already exist
 			{
-				$fw = fopen("upload/rawName.txt", "w");	//Store original name of file in text document
+				$fw = fopen("../upload/eicoName.txt", "w");	//Store original name of file in text document
 				fwrite($fw, $_FILES["file"]["name"]);
 				fclose($fw);
-				move_uploaded_file($_FILES["file"]["tmp_name"], "upload/rawData.txt");	//Move the file to the upload folder
+				move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/eicoData.txt");	//Move the file to the upload folder
 			}
 		}
 	}
 	else{
 		//Invalid file
-	}	
+	}
 ?>

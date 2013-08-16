@@ -9,7 +9,7 @@
 	$graphHide = $_POST['postGraphHide'];
 	$sentFrom = $_POST['postSentFrom'];
 	
-	$fw = fopen('upload/saveDetails.txt', 'w');	//Create new file to write to
+	$fw = fopen('../upload/saveDetails.txt', 'w');	//Create new file to write to
 	fwrite($fw, $sampleMass."\n");	//Write data to file, each on a new line
 	fwrite($fw, $molWeight."\n");	//Data used to refill input fields after cancellation refresh
 	fwrite($fw, $sampleEico."\n");
