@@ -1,12 +1,20 @@
 SQUID-Fix
-================
-SQUID-Fix is a tool designed for chemistry students to save time when analysing SQUID data.
-The program automates the process of subracting the signal caused by the gel cap and Eicosane, 
-leaving the raw sample data.
+====================
+SQUID-Fix is a tool designed for chemistry students. It will correct your SQUID data
+for long moment and then use that to calculate Chi and ChiT. After this, it will plot a graph
+of Chi and ChiT vs temperature and will also allow you to download a file containing:
+- Temperature
+- Uncorrected Long Moment
+- Long Moment
+- Uncorrected Chi
+- Chi
+- Uncorrected ChiT
+- ChiT
 <br />
->Current Status - Data corrected as intended, set parameters through config file. Runs from file.
->><h2>Important Files</h2>
-SQUID-Fix.py - Main script <br />
-DataHandling.py - Contains functions related to handling data <br />
-Matching.py - Contains matching algorithm <br />
-config.txt - Parameters set within file used when program is run <br />
+
+How To Set Up SQUID-Fix:
+1) Download 'AutoSquidCorrect' from GitHub - https://github.com/TomW1996/AutoSquidCorrect
+2) Download and install Wampserver - http://www.wampserver.com/
+3) Move the contents of the AutoSquidCorrect folder into C:\wamp\www
+4) Start Wamp
+5) Search localhost in your address bar
