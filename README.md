@@ -12,9 +12,9 @@ of Chi and ChiT vs temperature and will also allow you to download a file contai
 - ChiT
 <br />
 
-How To Set Up SQUID-Fix:
-1) Download 'AutoSquidCorrect' from GitHub - https://github.com/TomW1996/AutoSquidCorrect
-2) Download and install Wampserver - http://www.wampserver.com/
-3) Move the contents of the AutoSquidCorrect folder into C:\wamp\www
-4) Start Wamp
-5) Search localhost in your address bar
+How To Set Up SQUID-Fix: <br />
+1) Download 'AutoSquidCorrect' from GitHub - https://github.com/TomW1996/AutoSquidCorrect <br />
+2) Download and install Wampserver - http://www.wampserver.com/ <br />
+3) Move the contents of the AutoSquidCorrect folder into C:\wamp\www <br />
+4) Start Wamp <br />
+5) Search localhost in your address bar <br />
