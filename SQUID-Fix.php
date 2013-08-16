@@ -478,23 +478,34 @@
 			?>
 			<?php
 				if(file_exists("upload/saveDetails.txt")){
+					echo 'console.log("1");';
 					$fr = fopen("upload/saveDetails.txt", "r");
-					for($i = 0; $i < 6; $i++){
+					for($i = 0; $i < 7; $i++){
 						$data = fgets($fr);
 					}
 					fclose($fr);
 					if($data == "visible"){
+						echo 'console.log("2");';
 						echo 'document.getElementById("downloadButton").style.visibility = "visible";';
-						echo 'document.getElementById("graphButton").style.visibility = "visible";';	
+						echo 'document.getElementById("graphButton").style.visibility = "visible";';
+						echo 'document.getElementById("cancelRaw").style.visibility = "hidden";';
+						echo 'document.getElementById("cancelCap").style.visibility = "hidden";';
+						echo 'document.getElementById("cancelEico").style.visibility = "hidden";';
 					}
 					else{
 						echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
 						echo 'document.getElementById("graphButton").style.visibility = "hidden";';
+						echo 'document.getElementById("cancelRaw").style.visibility = "visible";';
+						echo 'document.getElementById("cancelCap").style.visibility = "visible";';
+						echo 'document.getElementById("cancelEico").style.visibility = "visible";';
 					}
 				}
 				else{
 					echo 'document.getElementById("downloadButton").style.visibility = "hidden";';
 					echo 'document.getElementById("graphButton").style.visibility = "hidden";';
+					echo 'document.getElementById("cancelRaw").style.visibility = "hidden";';
+					echo 'document.getElementById("cancelCap").style.visibility = "hidden";';
+					echo 'document.getElementById("cancelEico").style.visibility = "hidden";';
 				}
 			?>
 		</script>
@@ -532,6 +543,9 @@
 				$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Run correction - no eicosane
 				document.getElementById("downloadButton").style.visibility = "visible"; //Make the download button visible
 				document.getElementById("graphButton").style.visibility = "visible"; //Make the download button visible
+				document.getElementById("cancelRaw").style.visibility = "hidden";
+				document.getElementById("cancelCap").style.visibility = "hidden";
+				document.getElementById("cancelEico").style.visibility = "hidden";
 			}
 		
 			function getData(){	//Get values from text fields to use in correction script
@@ -576,7 +590,10 @@
 									if(applyCorrection == 0 || parseFloat(pascalValue)/1 == pascalValue){
 										$.post('SetUpConfig.php', {postSampleMass: sampleMass, postMolWeight: molWeight, postSampleEico: sampleEico, postBlankEico: blankEico, postApplyCorrection: applyCorrection, postPascalValue: pascalValue, postEicoData: eicoData}, function(data){}); //Send information to separate PHP script
 										document.getElementById("downloadButton").style.visibility = "visible";
-										document.getElementById("graphButton").style.visibility = "visible";												
+										document.getElementById("graphButton").style.visibility = "visible";
+										document.getElementById("cancelRaw").style.visibility = "hidden";
+										document.getElementById("cancelCap").style.visibility = "hidden";
+										document.getElementById("cancelEico").style.visibility = "hidden";										
 									}
 									else{
 										$('#pascalModal').modal();
